@@ -2,10 +2,17 @@
 
 All notable changes to this project are documented here.
 
+This fork's source baseline is upstream [`2302efa5db07`](https://github.com/nexu-io/open-design/commit/2302efa5db0776a4364f92584196d6380c2f9404) (2026-05-27). Versioned sections below are inherited upstream release history: their inventory numbers and architecture descriptions refer to those releases, not this fork's current checkout. See [the fork inventory](docs/fork-inventory.md) for current counts and scope.
+
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Documentation
+
+- Audit the fork's tracked content on 2026-10-07: **137 skill entries**, **110 design-template packages**, **150 design-system packages**, and **401 bundled plugin manifests**. Skill entries include upstream catalog stubs; community/spec plugin examples and derived preview cards are excluded from bundled/package counts.
+- Align `README.md` and `README.zh-TW.md` with the directory/manifest inventory, distinguish skills from rendering templates and plugin wrappers, and label upstream announcements/activity links with the fork's source baseline. Record the stale GitHub About text and its suggested replacement in `docs/fork-inventory.md`.
 
 ## [0.8.0] - 2026-05-20
 

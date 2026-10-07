@@ -1,9 +1,11 @@
-# Open Design —— [Claude Design][cd] 的官方開源替代品
+# Open Design —— [Claude Design][cd] 的開源替代品
 
-> **Open Design 是 [Claude Design][cd] 的開源、本地優先替代品。** 可部署到 Vercel、每一層都 BYOK —— **16 套 coding-agent CLI** 在 `PATH` 上自動檢測（Claude Code, Codex, Devin for Terminal, Cursor Agent, Gemini CLI, OpenCode, Qwen, Qoder CLI, GitHub Copilot CLI, Hermes, Kimi, Pi, Kiro, Kilo, Mistral Vibe, DeepSeek TUI）就是設計引擎，由 **31 個可組合 Skills** 和 **72 套品牌級 Design System** 驅動。一個都沒裝？還有 OpenAI 相容的 BYOK 代理 `/api/proxy/stream` 備援，同一條 loop，少一次 spawn 而已。
+> **Open Design 是 [Claude Design][cd] 的開源、本地優先替代品。** 可部署到 Vercel、每一層都 BYOK —— **16 套 coding-agent CLI** 在 `PATH` 上自動檢測（Claude Code, Codex, Devin for Terminal, Cursor Agent, Gemini CLI, OpenCode, Qwen, Qoder CLI, GitHub Copilot CLI, Hermes, Kimi, Pi, Kiro, Kilo, Mistral Vibe, DeepSeek TUI）就是設計引擎。此 fork 的原始碼包含 **137 個技能條目、110 套設計範本、150 套設計系統，以及 401 個內建外掛**。一個都沒裝？還有 OpenAI 相容的 BYOK 代理 `/api/proxy/stream` 備援，同一條 loop，少一次 spawn 而已。
+
+> **Fork 基準（2026-10-07 盤點）：** 本文件描述 `zivechu/open-design`，原始碼基於上游 [`2302efa5db07`](https://github.com/nexu-io/open-design/commit/2302efa5db0776a4364f92584196d6380c2f9404)（2026-05-27；`package.json` 版本為 `0.8.0`）。數量以此 fork 納入 Git 的檔案為準。技能條目包含上游工作流程的參照條目，完整流程需要另外安裝。詳見[盤點、計數規則與 GitHub About 建議文案](docs/fork-inventory.md)。下方的發行／下載連結、公告及儲存庫活動徽章指向上游。
 
 > [!IMPORTANT]
-> ### 🔥 `0.8.0-preview` 已發佈。設計的舊世界，到此為止。
+> ### 🔥 此基準保留的上游公告：`0.8.0-preview`
 >
 > Claude Design / Figma 的開源替代品 —— 上線兩週，40k stars 在身，且仍在加速。**剩下的路，需要你和我們一起推完。**
 >
@@ -30,8 +32,8 @@
   <a href="https://github.com/nexu-io/open-design/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/nexu-io/open-design?style=flat-square&color=blueviolet&label=release&include_prereleases&display_name=tag" /></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square" /></a>
   <a href="#支援的-coding-agent"><img alt="Agents" src="https://img.shields.io/badge/agents-16%20CLIs%20%2B%20BYOK%20proxy-black?style=flat-square" /></a>
-  <a href="#design-system"><img alt="Design systems" src="https://img.shields.io/badge/design%20systems-149-orange?style=flat-square" /></a>
-  <a href="#內建-skills"><img alt="Skills" src="https://img.shields.io/badge/skills-131-teal?style=flat-square" /></a>
+  <a href="#design-system"><img alt="Design systems" src="https://img.shields.io/badge/design%20systems-150-orange?style=flat-square" /></a>
+  <a href="#內建-skills"><img alt="Skills" src="https://img.shields.io/badge/skills-137-teal?style=flat-square" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="Discord" src="https://img.shields.io/badge/discord-加入-5865F2?style=flat-square&logo=discord&logoColor=white" /></a>
   <a href="https://x.com/nexudotio"><img alt="Follow @nexudotio on X" src="https://img.shields.io/badge/follow-%40nexudotio-1DA1F2?style=flat-square&logo=x&logoColor=white" /></a>
   <a href="QUICKSTART.zh-TW.md"><img alt="Quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat-square" /></a>
@@ -54,7 +56,7 @@ Anthropic 的 [Claude Design][cd]（2026-04-17 釋出，基於 Opus 4.7）讓大
 OD 站在四個開源專案的肩膀上：
 
 - [**`alchaincyf/huashu-design`**（花叔的畫術）](https://github.com/alchaincyf/huashu-design) —— 設計哲學的指南針。Junior-Designer 工作流、5 步品牌資產協議、anti-AI-slop checklist、五維自評審、以及方向選擇器背後的「5 流派 × 20 種設計哲學」思路 —— 全部蒸餾進 [`apps/daemon/src/prompts/discovery.ts`](apps/daemon/src/prompts/discovery.ts)。
-- [**`op7418/guizang-ppt-skill`**（歸藏的雜誌風 PPT skill）](https://github.com/op7418/guizang-ppt-skill) —— Deck 模式。原樣納入在 [`skills/guizang-ppt/`](skills/guizang-ppt/) 下，原 LICENSE 保留；雜誌版式、WebGL hero、P0/P1/P2 checklist。
+- [**`op7418/guizang-ppt-skill`**（歸藏的雜誌風 PPT skill）](https://github.com/op7418/guizang-ppt-skill) —— Deck 模式。原樣納入在 [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) 下，原 LICENSE 保留；雜誌版式、WebGL hero、P0/P1/P2 checklist。
 - [**`OpenCoworkAI/open-codesign`**](https://github.com/OpenCoworkAI/open-codesign) —— UX 北極星，也是我們最接近的同類。第一個開源的 Claude-Design 替代品。我們借鑑了它的流式 artifact 迴圈、沙盒 iframe 預覽模式（自帶 React 18 + Babel）、即時 agent 面板（todos + tool calls + 可中斷生成）、5 種匯出格式列表（HTML / PDF / PPTX / ZIP / Markdown）。我們刻意在形態上做出差異化 —— 它是桌面 Electron 應用，把 [`pi-ai`][piai] 打包進去做 agent；我們是 Web 應用 + 本地 daemon，把 agent 執行時**委託**給你已經裝好的 CLI。
 - [**`multica-ai/multica`**](https://github.com/multica-ai/multica) —— Daemon 與執行時架構。PATH 掃描式 agent 檢測，本地 daemon 作為唯一的特權程序，agent-as-teammate 的世界觀。
 
@@ -64,8 +66,10 @@ OD 站在四個開源專案的肩膀上：
 |---|---|
 | **Coding-agent CLI（16 套）** | Claude Code · Codex CLI · Devin for Terminal · Cursor Agent · Gemini CLI · OpenCode · Qwen Code · Qoder CLI · GitHub Copilot CLI · Hermes (ACP) · Kimi CLI (ACP) · Pi (RPC) · Kiro CLI (ACP) · Kilo (ACP) · Mistral Vibe CLI (ACP) · DeepSeek TUI —— 在 `PATH` 上自動檢測，picker 一鍵切換 |
 | **BYOK 備援** | 協定專用 API 代理 `/api/proxy/{anthropic,openai,azure,google}/stream` —— 填 `baseUrl` + `apiKey` + `model`，選擇 Anthropic / OpenAI / Azure OpenAI / Google Gemini，daemon 將 SSE 正規化回同一條 chat stream。daemon 邊界拒絕內部 IP / SSRF。 |
-| **內建 design system** | **129 套** —— 2 套手寫起手 + 70 套從 [`awesome-design-md`][acd2] 匯入的產品系統（Linear、Stripe、Vercel、Airbnb、Tesla、Notion、Anthropic、Apple、Cursor、Supabase、Figma、小紅書…），加上 57 套從 [`awesome-design-skills`][ads] 直接收錄到 `design-systems/` 下的 design skill |
-| **內建 skill** | **31 個** —— 27 個 `prototype` 模式（web-prototype、saas-landing、dashboard、mobile-app、gamified-app、social-carousel、magazine-poster、dating-web、sprite-animation、motion-frames、critique、tweaks、wireframe-sketch、pm-spec、eng-runbook、finance-report、hr-onboarding、invoice、kanban-board、team-okrs…）+ 4 個 `deck` 模式（`guizang-ppt` · `simple-deck` · `replit-deck` · `weekly-update`）。Picker 按 `scenario` 分組：design / marketing / operation / engineering / product / finance / hr / sale / personal。 |
+| **內建設計系統** | **150 套**，以 `design-systems/<slug>/DESIGN.md` 計數；`default/` 另有選用的 `manifest.json`。目錄同時包含品牌風格與通用樣式。 |
+| **技能目錄** | **137 個條目**，以 `skills/<slug>/SKILL.md` 計數，包含上游工作流程的參照條目；不能將此數量視為完整內建的上游工作流程數量。 |
+| **內建設計範本** | **110 套**，以 `design-templates/<slug>/SKILL.md` 計數，與技能目錄分開計算；由範例衍生的預覽卡片不算額外範本。 |
+| **內建外掛** | **401 個**，以 `plugins/_official/` 下不重複的 manifest `name` 計數：13 個 atoms、142 個設計系統包裝外掛、140 個 examples、45 個圖片範本、11 個 scenarios，以及 50 個影片範本。社群／規格範例不列入；包裝外掛不算額外的設計系統或技能。 |
 | **媒體生成** | Image · video · audio surface 與設計迴圈並行。**gpt-image-2**（Azure / OpenAI）用於海報、頭像、資訊圖表、插畫地圖 · **Seedance 2.0**（ByteDance）用於電影級 15 秒 text-to-video 和 image-to-video · **HyperFrames**（[heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)）用於 HTML→MP4 動態圖形（產品展示、動態排版、資料圖表、社群浮水印、logo 結尾）。**93 條**可一鍵複刻的 prompt gallery —— 43 條 gpt-image-2 + 39 條 Seedance + 11 條 HyperFrames —— 收錄在 [`prompt-templates/`](prompt-templates/) 下，附預覽縮圖與來源標註。與寫 code 同一個 chat 介面；生成真實的 `.mp4` / `.png` 晶片寫入專案 workspace。 |
 | **視覺方向** | 5 套精選流派（Editorial Monocle · Modern Minimal · Warm Soft · Tech Utility · Brutalist Experimental），每套自帶 OKLch 色票 + 字型堆疊（[`apps/daemon/src/prompts/directions.ts`](apps/daemon/src/prompts/directions.ts)） |
 | **裝置外殼** | iPhone 15 Pro · Pixel · iPad Pro · MacBook · Browser Chrome —— 畫素級精確，跨 skill 共享，統一在 [`assets/frames/`](assets/frames/) |
@@ -109,8 +113,8 @@ OD 站在四個開源專案的肩膀上：
 <sub><b>沙盒預覽</b> —— 每個 <code>&lt;artifact&gt;</code> 都在乾淨的 srcdoc iframe 裡渲染。可在檔案工作區裡就地編輯；可下載為 HTML / PDF / ZIP。</sub>
 </td>
 <td width="50%">
-<img src="docs/screenshots/06-design-systems-library.png" alt="06 · 72 套 design system 庫" /><br/>
-<sub><b>72 套 design system 庫</b> —— 每套產品系統都展示 4 色色卡。點進去看完整的 <code>DESIGN.md</code>、色票網格、live showcase。</sub>
+<img src="docs/screenshots/06-design-systems-library.png" alt="06 · 設計系統目錄" /><br/>
+<sub><b>設計系統目錄</b> —— 每套產品系統都展示 4 色色卡。點進去看完整的 <code>DESIGN.md</code>、色票網格、live showcase。</sub>
 </td>
 </tr>
 <tr>
@@ -127,9 +131,9 @@ OD 站在四個開源專案的肩膀上：
 
 ## 內建 Skills
 
-**31 個 skill，每個一個資料夾**，都遵循 Claude Code 的 [`SKILL.md`][skill] 規範，併疊加 OD 的 `od:` frontmatter，daemon 原樣解析 —— `mode`、`platform`、`scenario`、`preview.type`、`design_system.requires`、`default_for`、`featured`、`fidelity`、`speaker_notes`、`animations`、`example_prompt`（[`apps/daemon/src/skills.ts`](apps/daemon/src/skills.ts)）。
+**[`skills/`](skills/) 有 137 個技能條目；[`design-templates/`](design-templates/) 另有 110 套設計範本。** 兩者都採用 Claude Code 的 [`SKILL.md`][skill] 規範與 OD 的 `od:` frontmatter，由 daemon 解析（[`apps/daemon/src/skills.ts`](apps/daemon/src/skills.ts)）。技能數量包含僅提供上游安裝指引的參照條目，不能代表所有上游資源、腳本與參考資料都已內建；詳見 [`skills/AGENTS.md`](skills/AGENTS.md)。
 
-兩種頂層 **mode** 撐起整個目錄：**`prototype`**（27 個 —— 任何能被渲染成單頁 artifact 的產物，從雜誌風 landing 到手機螢幕到 PM 規格文件都算）和 **`deck`**（4 個 —— 橫滑式演示，自帶 deck framework 框架）。**`scenario`** 是 picker 用來分組的欄位：`design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`。
+設計範本包含 **`prototype`**、**`deck`** 及圖片、影片、音訊等類型。Settings → Skills 讀取 `skills/`；EntryView 的 Templates 分頁讀取 `design-templates/`。部分較早的渲染條目仍留在 `skills/`，因此盤點依目錄歸屬計算，不將 `od.mode` 的數量當成總數。下方只列精選範例，並非完整清單。**`scenario`** 是分類欄位：`design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`。
 
 ### 示例展示（Showcase examples）
 
@@ -138,42 +142,42 @@ OD 站在四個開源專案的肩膀上：
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/dating-web/"><img src="docs/screenshots/skills/dating-web.png" alt="dating-web" /></a><br/>
-<sub><b><a href="skills/dating-web/"><code>dating-web</code></a></b> · <i>prototype</i><br/>消費級約會 / 婚戀儀表盤 —— 左側欄、社群動態 ticker、頭部 KPI、30 天雙向匹配柱狀圖，editorial 字型，剋制點綴色。</sub>
+<a href="design-templates/dating-web/"><img src="docs/screenshots/skills/dating-web.png" alt="dating-web" /></a><br/>
+<sub><b><a href="design-templates/dating-web/"><code>dating-web</code></a></b> · <i>prototype</i><br/>消費級約會 / 婚戀儀表盤 —— 左側欄、社群動態 ticker、頭部 KPI、30 天雙向匹配柱狀圖，editorial 字型，剋制點綴色。</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/digital-eguide/"><img src="docs/screenshots/skills/digital-eguide.png" alt="digital-eguide" /></a><br/>
-<sub><b><a href="skills/digital-eguide/"><code>digital-eguide</code></a></b> · <i>template</i><br/>兩頁數字 e-guide —— 封面（標題、作者、TOC 預告）+ 內文跨頁（pull-quote + 步驟列表），創作者 / 生活方式風。</sub>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="skills/email-marketing/"><img src="docs/screenshots/skills/email-marketing.png" alt="email-marketing" /></a><br/>
-<sub><b><a href="skills/email-marketing/"><code>email-marketing</code></a></b> · <i>prototype</i><br/>品牌新品釋出郵件 —— 頂部 wordmark、hero 圖、標題鎖排、主 CTA、規格網格。居中單列 + 表格降級，郵件客戶端安全。</sub>
-</td>
-<td width="50%" valign="top">
-<a href="skills/gamified-app/"><img src="docs/screenshots/skills/gamified-app.png" alt="gamified-app" /></a><br/>
-<sub><b><a href="skills/gamified-app/"><code>gamified-app</code></a></b> · <i>prototype</i><br/>三螢幕遊戲化移動 app 原型，黑色舞臺 —— 封面 / 今日任務（XP 緞帶 + 等級條）/ 任務詳情。</sub>
+<a href="design-templates/digital-eguide/"><img src="docs/screenshots/skills/digital-eguide.png" alt="digital-eguide" /></a><br/>
+<sub><b><a href="design-templates/digital-eguide/"><code>digital-eguide</code></a></b> · <i>template</i><br/>兩頁數字 e-guide —— 封面（標題、作者、TOC 預告）+ 內文跨頁（pull-quote + 步驟列表），創作者 / 生活方式風。</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/mobile-onboarding/"><img src="docs/screenshots/skills/mobile-onboarding.png" alt="mobile-onboarding" /></a><br/>
-<sub><b><a href="skills/mobile-onboarding/"><code>mobile-onboarding</code></a></b> · <i>prototype</i><br/>三螢幕行動版引導流 —— splash、價值主張、登入。狀態列、滑動點、主 CTA。</sub>
+<a href="design-templates/email-marketing/"><img src="docs/screenshots/skills/email-marketing.png" alt="email-marketing" /></a><br/>
+<sub><b><a href="design-templates/email-marketing/"><code>email-marketing</code></a></b> · <i>prototype</i><br/>品牌新品釋出郵件 —— 頂部 wordmark、hero 圖、標題鎖排、主 CTA、規格網格。居中單列 + 表格降級，郵件客戶端安全。</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/motion-frames/"><img src="docs/screenshots/skills/motion-frames.png" alt="motion-frames" /></a><br/>
-<sub><b><a href="skills/motion-frames/"><code>motion-frames</code></a></b> · <i>prototype</i><br/>單幀 motion 設計 hero，CSS 迴圈動畫 —— 旋轉字環、地球、計時器。可直接交給 HyperFrames 等關鍵幀匯出。</sub>
+<a href="design-templates/gamified-app/"><img src="docs/screenshots/skills/gamified-app.png" alt="gamified-app" /></a><br/>
+<sub><b><a href="design-templates/gamified-app/"><code>gamified-app</code></a></b> · <i>prototype</i><br/>三螢幕遊戲化移動 app 原型，黑色舞臺 —— 封面 / 今日任務（XP 緞帶 + 等級條）/ 任務詳情。</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/social-carousel/"><img src="docs/screenshots/skills/social-carousel.png" alt="social-carousel" /></a><br/>
-<sub><b><a href="skills/social-carousel/"><code>social-carousel</code></a></b> · <i>prototype</i><br/>1080×1080 三連社媒輪播圖 —— 三張電影感面板，標題前後呼應，品牌標識、loop 標記。</sub>
+<a href="design-templates/mobile-onboarding/"><img src="docs/screenshots/skills/mobile-onboarding.png" alt="mobile-onboarding" /></a><br/>
+<sub><b><a href="design-templates/mobile-onboarding/"><code>mobile-onboarding</code></a></b> · <i>prototype</i><br/>三螢幕行動版引導流 —— splash、價值主張、登入。狀態列、滑動點、主 CTA。</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/sprite-animation/"><img src="docs/screenshots/skills/sprite-animation.png" alt="sprite-animation" /></a><br/>
-<sub><b><a href="skills/sprite-animation/"><code>sprite-animation</code></a></b> · <i>prototype</i><br/>畫素 / 8-bit 動畫直譯器單幀 —— 米白通螢幕、畫素吉祥物、動感日文標題、迴圈 CSS keyframes，可直接錄螢幕成豎版影片。</sub>
+<a href="design-templates/motion-frames/"><img src="docs/screenshots/skills/motion-frames.png" alt="motion-frames" /></a><br/>
+<sub><b><a href="design-templates/motion-frames/"><code>motion-frames</code></a></b> · <i>prototype</i><br/>單幀 motion 設計 hero，CSS 迴圈動畫 —— 旋轉字環、地球、計時器。可直接交給 HyperFrames 等關鍵幀匯出。</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="design-templates/social-carousel/"><img src="docs/screenshots/skills/social-carousel.png" alt="social-carousel" /></a><br/>
+<sub><b><a href="design-templates/social-carousel/"><code>social-carousel</code></a></b> · <i>prototype</i><br/>1080×1080 三連社媒輪播圖 —— 三張電影感面板，標題前後呼應，品牌標識、loop 標記。</sub>
+</td>
+<td width="50%" valign="top">
+<a href="design-templates/sprite-animation/"><img src="docs/screenshots/skills/sprite-animation.png" alt="sprite-animation" /></a><br/>
+<sub><b><a href="design-templates/sprite-animation/"><code>sprite-animation</code></a></b> · <i>prototype</i><br/>畫素 / 8-bit 動畫直譯器單幀 —— 米白通螢幕、畫素吉祥物、動感日文標題、迴圈 CSS keyframes，可直接錄螢幕成豎版影片。</sub>
 </td>
 </tr>
 </table>
@@ -182,49 +186,49 @@ OD 站在四個開源專案的肩膀上：
 
 | Skill | 平臺 | 場景 | 產出 |
 |---|---|---|---|
-| [`web-prototype`](skills/web-prototype/) | 桌面 | design | 單頁 HTML —— landing、營銷、hero（prototype 預設） |
-| [`saas-landing`](skills/saas-landing/) | 桌面 | marketing | hero / features / pricing / CTA 營銷版式 |
-| [`dashboard`](skills/dashboard/) | 桌面 | operation | 帶側欄 + 資料密集型的後臺 |
-| [`pricing-page`](skills/pricing-page/) | 桌面 | sale | 獨立定價頁 + 對比表 |
-| [`docs-page`](skills/docs-page/) | 桌面 | engineering | 三欄文件版式 |
-| [`blog-post`](skills/blog-post/) | 桌面 | marketing | 長文 editorial |
-| [`mobile-app`](skills/mobile-app/) | 移動 | design | 帶 iPhone 15 Pro / Pixel 外殼的 app 螢幕 |
-| [`mobile-onboarding`](skills/mobile-onboarding/) | 移動 | design | 多螢幕行動版引導流（splash · 價值主張 · 登入） |
-| [`gamified-app`](skills/gamified-app/) | 移動 | personal | 三螢幕遊戲化 app 原型 |
-| [`email-marketing`](skills/email-marketing/) | 桌面 | marketing | 品牌新品釋出郵件（表格降級郵件客戶端安全） |
-| [`social-carousel`](skills/social-carousel/) | 桌面 | marketing | 1080×1080 三連社媒輪播 |
-| [`magazine-poster`](skills/magazine-poster/) | 桌面 | marketing | 單頁雜誌風海報 |
-| [`motion-frames`](skills/motion-frames/) | 桌面 | marketing | CSS 迴圈動畫的 motion hero |
-| [`sprite-animation`](skills/sprite-animation/) | 桌面 | marketing | 畫素 / 8-bit 動畫直譯器 |
-| [`dating-web`](skills/dating-web/) | 桌面 | personal | 消費級約會 / 婚戀儀表盤 |
-| [`digital-eguide`](skills/digital-eguide/) | 桌面 | marketing | 兩頁數字 e-guide（封面 + 內文跨頁） |
-| [`wireframe-sketch`](skills/wireframe-sketch/) | 桌面 | design | 手繪風線框稿 —— 服務於 "先把灰塊拼出來給使用者看" 的早期回合 |
-| [`critique`](skills/critique/) | 桌面 | design | 五維自評分卡（Philosophy · Hierarchy · Detail · Function · Innovation） |
-| [`tweaks`](skills/tweaks/) | 桌面 | design | AI 自吐 tweaks 面板 —— 模型自己丟擲值得調的引數 |
+| [`web-prototype`](design-templates/web-prototype/) | 桌面 | design | 單頁 HTML —— landing、營銷、hero（prototype 預設） |
+| [`saas-landing`](design-templates/saas-landing/) | 桌面 | marketing | hero / features / pricing / CTA 營銷版式 |
+| [`dashboard`](design-templates/dashboard/) | 桌面 | operation | 帶側欄 + 資料密集型的後臺 |
+| [`pricing-page`](design-templates/pricing-page/) | 桌面 | sale | 獨立定價頁 + 對比表 |
+| [`docs-page`](design-templates/docs-page/) | 桌面 | engineering | 三欄文件版式 |
+| [`blog-post`](design-templates/blog-post/) | 桌面 | marketing | 長文 editorial |
+| [`mobile-app`](design-templates/mobile-app/) | 移動 | design | 帶 iPhone 15 Pro / Pixel 外殼的 app 螢幕 |
+| [`mobile-onboarding`](design-templates/mobile-onboarding/) | 移動 | design | 多螢幕行動版引導流（splash · 價值主張 · 登入） |
+| [`gamified-app`](design-templates/gamified-app/) | 移動 | personal | 三螢幕遊戲化 app 原型 |
+| [`email-marketing`](design-templates/email-marketing/) | 桌面 | marketing | 品牌新品釋出郵件（表格降級郵件客戶端安全） |
+| [`social-carousel`](design-templates/social-carousel/) | 桌面 | marketing | 1080×1080 三連社媒輪播 |
+| [`magazine-poster`](design-templates/magazine-poster/) | 桌面 | marketing | 單頁雜誌風海報 |
+| [`motion-frames`](design-templates/motion-frames/) | 桌面 | marketing | CSS 迴圈動畫的 motion hero |
+| [`sprite-animation`](design-templates/sprite-animation/) | 桌面 | marketing | 畫素 / 8-bit 動畫直譯器 |
+| [`dating-web`](design-templates/dating-web/) | 桌面 | personal | 消費級約會 / 婚戀儀表盤 |
+| [`digital-eguide`](design-templates/digital-eguide/) | 桌面 | marketing | 兩頁數字 e-guide（封面 + 內文跨頁） |
+| [`wireframe-sketch`](design-templates/wireframe-sketch/) | 桌面 | design | 手繪風線框稿 —— 服務於 "先把灰塊拼出來給使用者看" 的早期回合 |
+| [`critique`](design-templates/critique/) | 桌面 | design | 五維自評分卡（Philosophy · Hierarchy · Detail · Function · Innovation） |
+| [`tweaks`](design-templates/tweaks/) | 桌面 | design | AI 自吐 tweaks 面板 —— 模型自己丟擲值得調的引數 |
 
 ### Deck 類（deck 模式）
 
 | Skill | 預設 | 產出 |
 |---|---|---|
-| [`guizang-ppt`](skills/guizang-ppt/) | **deck 預設** | 雜誌風網頁 PPT —— 來自 [op7418/guizang-ppt-skill][guizang]，原 LICENSE 保留 |
-| [`simple-deck`](skills/simple-deck/) | — | 極簡橫滑 deck |
-| [`replit-deck`](skills/replit-deck/) | — | 產品演示 deck（Replit 風） |
-| [`weekly-update`](skills/weekly-update/) | — | 團隊週報橫滑 deck（進度 · 阻塞 · 下一步） |
+| [`guizang-ppt`](design-templates/guizang-ppt/) | **deck 預設** | 雜誌風網頁 PPT —— 來自 [op7418/guizang-ppt-skill][guizang]，原 LICENSE 保留 |
+| [`simple-deck`](design-templates/simple-deck/) | — | 極簡橫滑 deck |
+| [`replit-deck`](design-templates/replit-deck/) | — | 產品演示 deck（Replit 風） |
+| [`weekly-update`](design-templates/weekly-update/) | — | 團隊週報橫滑 deck（進度 · 阻塞 · 下一步） |
 
 ### 文件與辦公產物類（prototype 模式 + 文件場景）
 
 | Skill | Scenario | 產出 |
 |---|---|---|
-| [`pm-spec`](skills/pm-spec/) | product | PM 規格文件 + 目錄 + 決策日誌 |
-| [`team-okrs`](skills/team-okrs/) | product | OKR 計分表 |
-| [`meeting-notes`](skills/meeting-notes/) | operation | 會議決策紀要 |
-| [`kanban-board`](skills/kanban-board/) | operation | 看板快照 |
-| [`eng-runbook`](skills/eng-runbook/) | engineering | 故障 runbook |
-| [`finance-report`](skills/finance-report/) | finance | 高管財務摘要 |
-| [`invoice`](skills/invoice/) | finance | 單頁發票 |
-| [`hr-onboarding`](skills/hr-onboarding/) | hr | 崗位入職計畫 |
+| [`pm-spec`](design-templates/pm-spec/) | product | PM 規格文件 + 目錄 + 決策日誌 |
+| [`team-okrs`](design-templates/team-okrs/) | product | OKR 計分表 |
+| [`meeting-notes`](design-templates/meeting-notes/) | operation | 會議決策紀要 |
+| [`kanban-board`](design-templates/kanban-board/) | operation | 看板快照 |
+| [`eng-runbook`](design-templates/eng-runbook/) | engineering | 故障 runbook |
+| [`finance-report`](design-templates/finance-report/) | finance | 高管財務摘要 |
+| [`invoice`](design-templates/invoice/) | finance | 單頁發票 |
+| [`hr-onboarding`](design-templates/hr-onboarding/) | hr | 崗位入職計畫 |
 
-新增一個 skill 就是新增一個資料夾。讀 [`docs/skills-protocol.md`](docs/skills-protocol.md) 瞭解擴充套件 frontmatter，fork 一個現有 skill，重啟 daemon 即生效。目錄拉取走 `GET /api/skills`；單個 skill 的種子拼裝（template + 邊角檔案 references）走 `GET /api/skills/:id/example`。
+功能性技能放在 `skills/`，渲染範本放在 `design-templates/`；兩者都採用 [`docs/skills-protocol.md`](docs/skills-protocol.md) 描述的 frontmatter。目錄端點分別是 `GET /api/skills` 與 `GET /api/design-templates`。相容性的 `/api/skills/:id/` 資源與範例路由可讀取兩個目錄。
 
 ## 六個底層設計
 
@@ -232,13 +236,13 @@ OD 站在四個開源專案的肩膀上：
 
 Daemon 啟動時掃 `PATH`，找 [`claude`](https://docs.anthropic.com/en/docs/claude-code)、[`codex`](https://github.com/openai/codex)、[`cursor-agent`](https://www.cursor.com/cli)、[`gemini`](https://github.com/google-gemini/gemini-cli)、[`opencode`](https://opencode.ai/)、[`qwen`](https://github.com/QwenLM/qwen-code)、`qodercli`、[`copilot`](https://github.com/features/copilot/cli)、`hermes`、`kimi` 和 [`pi`](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent)。能找到的都成為候選設計引擎 —— 走 stdio，每個 CLI 一個 adapter，model picker 一鍵切換。靈感來自 [`multica`](https://github.com/multica-ai/multica) 和 [`cc-switch`](https://github.com/farion1231/cc-switch)。一個 CLI 都沒裝？`POST /api/proxy/stream` 就是同一條管線減去 spawn —— 填任意 OpenAI 相容 `baseUrl` + `apiKey`，daemon 把 SSE 轉發回瀏覽器，loopback / link-local / RFC1918 在邊界直接拒絕。
 
-### 2 · Skill 是檔案，不是外掛
+### 2 · 技能與設計範本採用可攜式檔案
 
-遵循 Claude Code [`SKILL.md` 規範](https://docs.anthropic.com/en/docs/claude-code/skills)，每個 skill = `SKILL.md` + `assets/` + `references/`。把一個資料夾丟進 [`skills/`](skills/)，重啟 daemon，picker 裡就能看到。內建的 `magazine-web-ppt` 就是 [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) **原樣**納入 —— 原 LICENSE 保留、原作者歸屬保留。
+遵循 Claude Code 的 [`SKILL.md` 規範](https://docs.anthropic.com/en/docs/claude-code/skills)，每個條目有一份 `SKILL.md`，並可附帶 `assets/` 和 `references/`。功能性技能放在 [`skills/`](skills/)；渲染範本放在 [`design-templates/`](design-templates/)。外掛透過 `open-design.json` 描述工作流程，並可引用這些目錄。內建的 `magazine-web-ppt` 範本來自 [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill)，保留原始授權及作者歸屬。
 
 ### 3 · Design System 是可移植的 Markdown，不是 theme JSON
 
-[`VoltAgent/awesome-design-md`][acd2] 的 9 段式 `DESIGN.md` —— color、typography、spacing、layout、components、motion、voice、brand、anti-patterns。每個 artifact 都從啟用的 system 裡讀 token。切換 system → 下一次渲染就用新的 token。下拉框裡現成的有：**Linear、Stripe、Vercel、Airbnb、Tesla、Notion、Apple、Anthropic、Cursor、Supabase、Figma、Resend、Raycast、Lovable、Cohere、Mistral、ElevenLabs、X.AI、Spotify、Webflow、Sanity、PostHog、Sentry、MongoDB、ClickHouse、Cal、Replicate、Clay、Composio、小紅書…** 共 72 套。
+[`VoltAgent/awesome-design-md`][acd2] 的 9 段式 `DESIGN.md` —— color、typography、spacing、layout、components、motion、voice、brand、anti-patterns。每個 artifact 都從啟用的 system 裡讀 token。切換 system → 下一次渲染就用新的 token。下拉框裡現成的有：**Linear、Stripe、Vercel、Airbnb、Tesla、Notion、Apple、Anthropic、Cursor、Supabase、Figma、Resend、Raycast、Lovable、Cohere、Mistral、ElevenLabs、X.AI、Spotify、Webflow、Sanity、PostHog、Sentry、MongoDB、ClickHouse、Cal、Replicate、Clay、Composio、小紅書…** 共 150 套。
 
 ### 4 · 初始化問題表單幹掉 80% 的來回返工
 
@@ -257,8 +261,8 @@ Daemon `spawn` CLI 時，`cwd` 設到該專案在 `.od/projects/<id>/` 下的 ar
 ```
 DISCOVERY 指令         （turn-1 表單、turn-2 品牌分支、TodoWrite、五維評審）
   + 身份與工作流憲章   （OFFICIAL_DESIGNER_PROMPT、anti-AI-slop、Junior Designer 模式）
-  + 啟用的 DESIGN.md   （72 套備選）
-  + 啟用的 SKILL.md    （31 套備選）
+  + 啟用的 DESIGN.md   （150 套備選）
+  + 啟用的 SKILL.md    （137 個技能條目與 110 套設計範本）
   + 專案後設資料          （kind、fidelity、speakerNotes、animations、靈感 system id）
   + Skill 副檔案       （自動注入 pre-flight：先讀 assets/template.html + references/*.md）
   + （deck kind 且無 skill 種子時） DECK_FRAMEWORK_DIRECTIVE   （nav / counter / scroll / print）
@@ -336,7 +340,7 @@ docker compose version
 #### 啟動 Open Design
 
 ```bash id="m9w43w"
-git clone https://github.com/nexu-io/open-design.git
+git clone https://github.com/zivechu/open-design.git
 cd open-design/deploy
 docker compose up -d
 ```
@@ -369,7 +373,7 @@ docker compose up -d
 ### 從原始碼執行
 
 ```bash
-git clone https://github.com/nexu-io/open-design.git
+git clone https://github.com/zivechu/open-design.git
 cd open-design
 corepack enable
 corepack pnpm --version   # 應輸出 10.33.2
@@ -387,7 +391,7 @@ Windows 使用者可參考 [`docs/windows-troubleshooting.md`](docs/windows-trou
 第一次載入會：
 
 1. 檢測你 `PATH` 上有哪些 agent CLI，自動選一個。
-2. 載入 31 個 skill + 72 套 design system。
+2. 載入 137 個技能條目、110 套設計範本與 150 套設計系統，並註冊 401 個內建外掛。
 3. 彈歡迎對話方塊，讓你貼 Anthropic key（僅 BYOK 備援路徑需要）。
 4. **自動建立 `./.od/`** —— 本地執行時目錄，存放 SQLite 專案庫、各專案工作區、儲存下來的 artifact。**沒有** `od init` 這一步，daemon 啟動時會自己 `mkdir`。
 
@@ -683,22 +687,19 @@ open-design/
 │   ├── sidecar/                   ← 通用 sidecar runtime primitives
 │   └── platform/                  ← 通用 process/platform primitives
 │
-├── skills/                        ← 31 個 SKILL.md skill 包（27 prototype + 4 deck）
-│   ├── web-prototype/             ← prototype 預設
-│   ├── saas-landing/  dashboard/  pricing-page/  docs-page/  blog-post/
-│   ├── mobile-app/  mobile-onboarding/  gamified-app/
-│   ├── email-marketing/  social-carousel/  magazine-poster/
-│   ├── motion-frames/  sprite-animation/  digital-eguide/  dating-web/
-│   ├── critique/  tweaks/  wireframe-sketch/
-│   ├── pm-spec/  team-okrs/  meeting-notes/  kanban-board/
-│   ├── eng-runbook/  finance-report/  invoice/  hr-onboarding/
-│   ├── simple-deck/  replit-deck/  weekly-update/   ← deck 模式
-│   └── guizang-ppt/               ← 內建 magazine-web-ppt（deck 預設）
-│       ├── SKILL.md
-│       ├── assets/template.html   ← seed
-│       └── references/{themes,layouts,components,checklist}.md
+├── skills/                        ← 137 個 SKILL.md 條目，包含上游參照條目
+│   ├── agent-browser/  design-brief/  hatch-pet/  …
+│   └── AGENTS.md                  ← 功能性技能與參照條目的說明
 │
-├── design-systems/                ← 72 套 DESIGN.md
+├── design-templates/              ← 110 套 SKILL.md 渲染範本
+│   ├── web-prototype/  dashboard/  mobile-app/  …
+│   ├── html-ppt/  simple-deck/  guizang-ppt/  …
+│   └── AGENTS.md                  ← 渲染範本的說明
+│
+├── plugins/_official/             ← 401 個 open-design.json manifests
+│   └── atoms/  design-systems/  examples/  image-templates/  scenarios/  video-templates/
+│
+├── design-systems/                ← 150 套 DESIGN.md
 │   ├── default/                   ← Neutral Modern（起手）
 │   ├── warm-editorial/            ← Warm Editorial（起手）
 │   ├── linear-app/  vercel/  stripe/  airbnb/  notion/  cursor/  apple/  …
@@ -738,13 +739,13 @@ open-design/
 ## Design System
 
 <p align="center">
-  <img src="docs/assets/design-systems-library.png" alt="72 套 Design Systems 庫 — 編輯版式雙頁" width="100%" />
+  <img src="docs/assets/design-systems-library.png" alt="設計系統目錄 — 編輯版式雙頁" width="100%" />
 </p>
 
-72 套開箱即用，每套一個 [`DESIGN.md`](design-systems/README.md)：
+150 套設計系統，每套有一份 [`DESIGN.md`](design-systems/README.md)：
 
 <details>
-<summary><b>完整目錄</b>（點選展開）</summary>
+<summary><b>精選目錄範例</b>（點選展開）</summary>
 
 **AI & LLM** —— `claude` · `cohere` · `mistral-ai` · `minimax` · `together-ai` · `replicate` · `runwayml` · `elevenlabs` · `ollama` · `x-ai`
 
@@ -826,7 +827,7 @@ OD 不只到程式碼為止。同一套產出 `<artifact>` HTML 的 chat 入口�
 
 ### HyperFrames —— HTML→MP4 動態圖形（11 條可一鍵複刻樣板）
 
-[**`heygen-com/hyperframes`**](https://github.com/heygen-com/hyperframes) 是 HeyGen 開源的 agent-native 影片框架 —— 你（或 agent）寫 HTML + CSS + GSAP，HyperFrames 透過 headless Chrome + FFmpeg 確定性地渲成 MP4。Open Design 把 HyperFrames 接成一等影片模型（`hyperframes-html`），掛進 daemon dispatch；同時帶上 `skills/hyperframes/` 這個 skill，把 timeline 合約、scene transition 規則、audio-reactive 模式、字幕 / TTS、目錄元件（`npx hyperframes add <slug>`）一起教給 agent。
+[**`heygen-com/hyperframes`**](https://github.com/heygen-com/hyperframes) 是 HeyGen 開源的 agent-native 影片框架 —— 你（或 agent）寫 HTML + CSS + GSAP，HyperFrames 透過 headless Chrome + FFmpeg 確定性地渲成 MP4。Open Design 把 HyperFrames 接成一等影片模型（`hyperframes-html`），掛進 daemon dispatch；同時帶上 `design-templates/hyperframes/` 這個 skill，把 timeline 合約、scene transition 規則、audio-reactive 模式、字幕 / TTS、目錄元件（`npx hyperframes add <slug>`）一起教給 agent。
 
 11 條 HyperFrames prompt 放在 [`prompt-templates/video/hyperframes-*.json`](prompt-templates/video/)，每一條都是產生具體某個原型的明確 brief：
 
@@ -851,7 +852,7 @@ OD 不只到程式碼為止。同一套產出 `<artifact>` HTML 的 chat 入口�
 </tr>
 </table>
 
-流程跟其它一樣：挑樣板、改 brief、送出。Agent 讀取自帶的 `skills/hyperframes/SKILL.md`（裡面帶 OD 專用的渲染流程 —— composition 原始檔落到 `.hyperframes-cache/`，避免汙染檔案工作區；daemon 替你觸發 `npx hyperframes render`，繞開 macOS sandbox-exec / Puppeteer 卡死；最終只有 `.mp4` 作為專案 chip 出現），寫完 composition、產出 MP4。目錄元件縮圖版權歸 HeyGen，由 HeyGen 的 CDN 提供；OSS 框架本身是 Apache-2.0。
+流程跟其它一樣：挑樣板、改 brief、送出。Agent 讀取自帶的 `design-templates/hyperframes/SKILL.md`（裡面帶 OD 專用的渲染流程 —— composition 原始檔落到 `.hyperframes-cache/`，避免汙染檔案工作區；daemon 替你觸發 `npx hyperframes render`，繞開 macOS sandbox-exec / Puppeteer 卡死；最終只有 `.mp4` 作為專案 chip 出現），寫完 composition、產出 MP4。目錄元件縮圖版權歸 HeyGen，由 HeyGen 的 CDN 提供；OSS 框架本身是 Apache-2.0。
 
 > **已經接好但還沒出 prompt 樣板的：** Kling 2.0 / 1.6 / 1.5、Veo 3 / Veo 2、Sora 2 / Sora 2-Pro（via Fal）、MiniMax video-01 —— 都在 `VIDEO_MODELS`（[`apps/web/src/media/models.ts`](apps/web/src/media/models.ts)）裡。Suno v5 / v4.5、Udio v2、Lyria 2（音樂）和 gpt-4o-mini-tts、MiniMax TTS（語音）覆蓋音訊側。補全這些模型的 prompt 樣板屬於開放貢獻 —— 把 JSON 放進 `prompt-templates/video/` 或 `prompt-templates/audio/`，picker 裡就能直接看到。
 
@@ -861,7 +862,7 @@ Chat / artifact 迴圈最顯眼，但這套倉庫裡還有幾個能力被埋得�
 
 - **Claude Design ZIP 匯入。** 把 claude.ai 匯出的 ZIP 拖到歡迎彈窗，`POST /api/import/claude-design` 把它解壓成真實 `.od/projects/<id>/`，把入口檔案作為 tab 開啟，並預置一句「接著 Anthropic 停下的地方繼續編輯」給本地 agent。不用再讓模型重述上下文，也不用「讓模型重新畫一遍」。([`apps/daemon/src/server.ts`](apps/daemon/src/server.ts) — `/api/import/claude-design`)
 - **OpenAI 相容 BYOK 代理。** `POST /api/proxy/stream` 接收 `{ baseUrl, apiKey, model, messages }`，自動歸一化路徑（`…/v1/chat/completions`），把 SSE chunk 轉發回瀏覽器；同時拒絕 loopback / link-local / RFC1918 防 SSRF。任何說 OpenAI chat schema 的 vendor 都能直接用 —— Anthropic-via-OpenAI shim、DeepSeek、Groq、MiMo、OpenRouter、自託管 vLLM 都行。MiMo 會自動加 `tool_choice: 'none'`，因為它的 tool schema 和 free-form 生成不太合得來。
-- **使用者自存 templates。** 喜歡某次渲染？`POST /api/templates` 把 HTML + 後設資料快照進 SQLite `templates` 表。下個專案的 picker 裡多一行「你的模板」 —— 跟內建 31 套同一個挑選面，但是你的。
+- **使用者自存 templates。** 喜歡某次渲染？`POST /api/templates` 把 HTML + 後設資料快照進 SQLite `templates` 表。下個專案的 picker 裡多一行「你的模板」 —— 與內建的 110 套設計範本使用同一個選擇介面。
 - **Tab 持久化。** 每個專案記得自己開啟的檔案和當前 tab，存在 `tabs` 表裡。明天再開啟，工作區還是你昨天離開時的樣子。
 - **Artifact lint API。** `POST /api/artifacts/lint` 對生成的 artifact 跑結構性檢查（`<artifact>` 框架是否破損、必需的副檔案是否缺失、palette token 是否過期），返回 agent 下一回合可以讀回去的 findings。五維自評審就是用它把分數落到證據上而不是 vibe。
 - **Sidecar 協議 + 桌面版自動化。** Daemon、web、desktop 程序都帶型別化的 5 欄位 stamp（`app · mode · namespace · ipc · source`），並把 JSON-RPC IPC 通道暴露在 `/tmp/open-design/ipc/<namespace>/<app>.sock`。`tools-dev inspect desktop status \| eval \| screenshot` 就跑在這條通道上，所以 headless E2E 直接打到真實 Electron 殼，不用造定製夾具（[`packages/sidecar-proto/`](packages/sidecar-proto/)、[`apps/desktop/src/main/`](apps/desktop/src/main/)）。
@@ -887,8 +888,8 @@ Chat / artifact 迴圈最顯眼，但這套倉庫裡還有幾個能力被埋得�
 | 形態 | Web (claude.ai) | 桌面 (Electron) | **Web 應用 + 本地 daemon** |
 | 可部署 Vercel | ❌ | ❌ | **✅** |
 | Agent 執行時 | 內建 (Opus 4.7) | 內建 ([`pi-ai`][piai]) | **委託給使用者已裝好的 CLI** |
-| Skill | 私有 | 12 套自定義 TS 模組 + `SKILL.md` | **31 套基於檔案的 [`SKILL.md`][skill]，可丟入** |
-| Design system | 私有 | `DESIGN.md`（v0.2 路線圖） | **`DESIGN.md` × 72 套，開箱即有** |
+| Skill | 私有 | 12 套自定義 TS 模組 + `SKILL.md` | **137 個技能條目（包含上游參照條目），另有 110 套設計範本** |
+| Design system | 私有 | `DESIGN.md`（v0.2 路線圖） | **`DESIGN.md` × 150 套，開箱即有** |
 | Provider 靈活度 | 僅 Anthropic | 7+（[`pi-ai`][piai]） | **16 套 CLI adapter + OpenAI 相容 BYOK 代理** |
 | 初始化問題表單 | ❌ | ❌ | **✅ 硬規則 turn 1** |
 | 方向選擇器 | ❌ | ❌ | **✅ 5 套確定性方向** |
@@ -896,7 +897,7 @@ Chat / artifact 迴圈最顯眼，但這套倉庫裡還有幾個能力被埋得�
 | 沙盒 iframe 預覽 | ❌ | ✅ | **✅**（模式來自 open-codesign） |
 | Claude Design ZIP 匯入 | n/a | ❌ | **✅ `POST /api/import/claude-design` —— 接著 Anthropic 停下的地方繼續編輯** |
 | 評論模式手術刀編輯 | ❌ | ✅ | 🚧 路線圖（移植自 open-codesign） |
-| AI 自吐 tweaks 面板 | ❌ | ✅ | 🟡 部分 —— [`tweaks` skill](skills/tweaks/) 已發，專屬 chat-side 面板 UX 仍在路線圖 |
+| AI 自吐 tweaks 面板 | ❌ | ✅ | 🟡 部分 —— [`tweaks` skill](design-templates/tweaks/) 已發，專屬 chat-side 面板 UX 仍在路線圖 |
 | 檔案系統級工作區 | ❌ | 部分（Electron 沙盒） | **✅ 真 cwd、真工具、SQLite 持久化（projects · conversations · messages · tabs · templates）** |
 | 五維自評審 | ❌ | ❌ | **✅ Emit 前必跑** |
 | Artifact lint | ❌ | ❌ | **✅ `POST /api/artifacts/lint` —— 把 findings 喂回 agent** |
@@ -946,7 +947,7 @@ Daemon 啟動時從 `PATH` 自動檢測，無需配置。流式分發邏輯在 [
 |---|---|
 | [`Claude Design`][cd] | 本倉庫為之提供開源替代的閉源產品。 |
 | [**`alchaincyf/huashu-design`**（花叔的畫術）](https://github.com/alchaincyf/huashu-design) | 設計哲學的核心。Junior-Designer 工作流、5 步品牌資產協議、anti-AI-slop checklist、五維自評審、以及方向選擇器背後的「5 流派 × 20 種設計哲學」庫 —— 全部蒸餾進 [`apps/daemon/src/prompts/discovery.ts`](apps/daemon/src/prompts/discovery.ts) 與 [`apps/daemon/src/prompts/directions.ts`](apps/daemon/src/prompts/directions.ts)。 |
-| [**`op7418/guizang-ppt-skill`**（歸藏）][guizang] | Magazine-web-PPT skill 原樣納入在 [`skills/guizang-ppt/`](skills/guizang-ppt/) 下，原 LICENSE 保留。Deck 模式預設。P0/P1/P2 checklist 文化也被借給了所有其他 skill。 |
+| [**`op7418/guizang-ppt-skill`**（歸藏）][guizang] | Magazine-web-PPT skill 原樣納入在 [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) 下，原 LICENSE 保留。Deck 模式預設。P0/P1/P2 checklist 文化也被借給了所有其他 skill。 |
 | [**`multica-ai/multica`**](https://github.com/multica-ai/multica) | Daemon + adapter 架構。PATH 掃描式 agent 檢測、本地 daemon 作為唯一特權程序、agent-as-teammate 世界觀。我們採納模型，不 vendor 程式碼。 |
 | [**`OpenCoworkAI/open-codesign`**][ocod] | 第一個開源的 Claude-Design 替代品，也是我們最接近的同類。已採納的 UX 模式：流式 artifact 迴圈、沙盒 iframe 預覽（自帶 React 18 + Babel）、即時 agent 面板（todos + tool calls + 可中斷）、5 種匯出格式列表（HTML/PDF/PPTX/ZIP/Markdown）、本地優先的 designs hub、`SKILL.md` 品味注入。路線圖上的 UX 模式：評論模式手術刀編輯、AI 自吐 tweaks 面板。**我們刻意不 vendor [`pi-ai`][piai]** —— open-codesign 把它打包成 agent 執行時；我們則委託給使用者已經裝好的 CLI。 |
 | [`VoltAgent/awesome-claude-design`][acd] / [`awesome-design-md`][acd2] | 9 段式 `DESIGN.md` schema 的來源，69 套產品系統透過 [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts) 匯入。 |
@@ -959,14 +960,14 @@ Daemon 啟動時從 `PATH` 自動檢測，無需配置。流式分發邏輯在 [
 
 - [x] Daemon + agent 檢測（16 套 CLI adapter）+ skill registry + design-system 目錄
 - [x] Web 應用 + 對話 + question form + 5 套方向選擇器 + todo progress + 沙盒預覽
-- [x] 31 個 skill + 72 套 design system + 5 套視覺方向 + 5 個裝置外殼
+- [x] 137 個技能條目 + 110 套設計範本 + 150 套設計系統 + 401 個內建外掛 + 5 套視覺方向 + 5 個裝置外殼
 - [x] SQLite 後端的 projects · conversations · messages · tabs · templates
 - [x] OpenAI 相容 BYOK 代理（`/api/proxy/stream`）含 SSRF 防禦
 - [x] Claude Design ZIP 匯入（`/api/import/claude-design`）
 - [x] Sidecar 協議 + Electron 桌面版 + IPC 自動化（STATUS / EVAL / SCREENSHOT / CONSOLE / CLICK / SHUTDOWN）
 - [x] Artifact lint API + 五維自評審 emit-前 gate
 - [ ] 評論模式手術刀編輯（點元素 → 指令 → 區域性 patch）—— 模式來自 [`open-codesign`][ocod]
-- [ ] AI 自吐 tweaks 面板 UX —— 基礎積木（[`tweaks` skill](skills/tweaks/)）已發，整合到 chat 的面板尚未完成
+- [ ] AI 自吐 tweaks 面板 UX —— 基礎積木（[`tweaks` skill](design-templates/tweaks/)）已發，整合到 chat 的面板尚未完成
 - [ ] Vercel + 隧道部署食譜（Topology B）
 - [ ] 一行 `npx od init` 腳手架帶 `DESIGN.md`
 - [ ] Skill 市場（`od skills install <github-repo>`）和 `od skill add | list | remove | test` CLI 表面（在 [`docs/skills-protocol.md`](docs/skills-protocol.md) 裡有草案，daemon 實現尚未跟上）
@@ -1032,10 +1033,10 @@ Daemon 啟動時從 `PATH` 自動檢測，無需配置。流式分發邏輯在 [
 
 ## 致謝 / Credits
 
-[`skills/html-ppt/`](skills/html-ppt/) 主 skill 以及 [`skills/html-ppt-*/`](skills/) 下的逐樣板子 skill —— 含 15 套 full-deck、36 套主題、31 個單頁 layout、27 個 CSS 動畫 + 20 個 canvas FX、鍵盤 runtime 與磁吸卡片演講者模式 —— 整合自開源專案 [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill)（MIT）。原始 LICENSE 保留在 [`skills/html-ppt/LICENSE`](skills/html-ppt/LICENSE)，原作者歸屬 [@lewislulu](https://github.com/lewislulu)。每張逐樣板的 Examples 卡片（`html-ppt-pitch-deck`、`html-ppt-tech-sharing`、`html-ppt-presenter-mode`、`html-ppt-xhs-post` …）都把 authoring 指南委派給主 skill —— 點 **Use this prompt** 之後，沿用上游同樣的 prompt → 輸出行為。
+[`design-templates/html-ppt/`](design-templates/html-ppt/) 主 skill 以及 [`design-templates/html-ppt-*/`](design-templates/) 下的逐樣板子 skill —— 含 15 套 full-deck、36 套主題、31 個單頁 layout、27 個 CSS 動畫 + 20 個 canvas FX、鍵盤 runtime 與磁吸卡片演講者模式 —— 整合自開源專案 [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill)（MIT）。原始 LICENSE 保留在 [`design-templates/html-ppt/LICENSE`](design-templates/html-ppt/LICENSE)，原作者歸屬 [@lewislulu](https://github.com/lewislulu)。每張逐樣板的 Examples 卡片（`html-ppt-pitch-deck`、`html-ppt-tech-sharing`、`html-ppt-presenter-mode`、`html-ppt-xhs-post` …）都把 authoring 指南委派給主 skill —— 點 **Use this prompt** 之後，沿用上游同樣的 prompt → 輸出行為。
 
-[`skills/guizang-ppt/`](skills/guizang-ppt/) 雜誌風橫向翻頁 deck 整合自 [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill)（MIT），原作者歸屬 [@op7418](https://github.com/op7418)。
+[`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) 雜誌風橫向翻頁 deck 整合自 [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill)（MIT），原作者歸屬 [@op7418](https://github.com/op7418)。
 
 ## License
 
-Apache-2.0。內建的 [`skills/guizang-ppt/`](skills/guizang-ppt/) 保留它原始的 [LICENSE](skills/guizang-ppt/LICENSE)（MIT）和原作者 [op7418](https://github.com/op7418) 的歸屬。內建的 [`skills/html-ppt/`](skills/html-ppt/) 保留它原始的 [LICENSE](skills/html-ppt/LICENSE)（MIT）和原作者 [lewislulu](https://github.com/lewislulu) 的歸屬。
+Apache-2.0。內建的 [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) 保留它原始的 [LICENSE](design-templates/guizang-ppt/LICENSE)（MIT）和原作者 [op7418](https://github.com/op7418) 的歸屬。內建的 [`design-templates/html-ppt/`](design-templates/html-ppt/) 保留它原始的 [LICENSE](design-templates/html-ppt/LICENSE)（MIT）和原作者 [lewislulu](https://github.com/lewislulu) 的歸屬。

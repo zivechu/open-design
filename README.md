@@ -1,9 +1,11 @@
 # Open Design — the open-source Claude Design alternative
 
-> **Open Design is the open-source, local-first alternative to [Claude Design][cd].** Web-deployable, BYOK at every layer — **16 coding-agent CLIs** auto-detected on your `PATH` (Claude Code, Codex, Devin for Terminal, Cursor Agent, Gemini CLI, OpenCode, Qwen, Qoder CLI, GitHub Copilot CLI, Hermes, Kimi, Pi, Kiro, Kilo, Mistral Vibe, DeepSeek TUI) become the design engine, driven by **132 composable Skills** and **150 brand-grade Design Systems**. No CLI? An OpenAI-compatible BYOK proxy is the same loop minus the spawn.
+> **Open Design is the open-source, local-first alternative to [Claude Design][cd].** Web-deployable, BYOK at every layer — **16 coding-agent CLIs** auto-detected on your `PATH` (Claude Code, Codex, Devin for Terminal, Cursor Agent, Gemini CLI, OpenCode, Qwen, Qoder CLI, GitHub Copilot CLI, Hermes, Kimi, Pi, Kiro, Kilo, Mistral Vibe, DeepSeek TUI) become the design engine, with **137 skill entries**, **110 design templates**, **150 design systems**, and **401 bundled plugins** in this fork's source tree. No CLI? An OpenAI-compatible BYOK proxy is the same loop minus the spawn.
+
+> **Fork baseline (audited 2026-10-07):** this README describes `zivechu/open-design`, based on upstream [`2302efa5db07`](https://github.com/nexu-io/open-design/commit/2302efa5db0776a4364f92584196d6380c2f9404) (2026-05-27; `package.json` version `0.8.0`). Counts come from this fork's tracked files, not the latest upstream README. Skill entries include catalog stubs whose full upstream workflows require a separate install. See the [inventory, counting rules, and suggested GitHub About text](docs/fork-inventory.md). Release/download links, announcements, and repository activity badges below refer to upstream.
 
 > [!IMPORTANT]
-> ### 🔥 `0.8.0-preview` is here. Design's old world ends here.
+> ### 🔥 Upstream announcement at this baseline: `0.8.0-preview`
 >
 > The open-source alternative to Claude Design / Figma — 40k stars in two weeks got us this far. **We need you to push the rest of the way.**
 >
@@ -31,7 +33,7 @@
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square" /></a>
   <a href="#supported-coding-agents"><img alt="Agents" src="https://img.shields.io/badge/agents-16%20CLIs%20%2B%20BYOK%20proxy-black?style=flat-square" /></a>
   <a href="#design-systems"><img alt="Design systems" src="https://img.shields.io/badge/design%20systems-150-orange?style=flat-square" /></a>
-  <a href="#skills"><img alt="Skills" src="https://img.shields.io/badge/skills-132-teal?style=flat-square" /></a>
+  <a href="#skills"><img alt="Skills" src="https://img.shields.io/badge/skills-137-teal?style=flat-square" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="Discord" src="https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white" /></a>
   <a href="https://x.com/nexudotio"><img alt="Follow @nexudotio on X" src="https://img.shields.io/badge/follow-%40nexudotio-1DA1F2?style=flat-square&logo=x&logoColor=white" /></a>
   <a href="QUICKSTART.md"><img alt="Quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat-square" /></a>
@@ -54,7 +56,7 @@ That's not "AI tries to design something". That's an AI that has been trained, b
 OD stands on four open-source shoulders:
 
 - [**`alchaincyf/huashu-design`**](https://github.com/alchaincyf/huashu-design) — the design-philosophy compass. Junior-Designer workflow, the 5-step brand-asset protocol, the anti-AI-slop checklist, the 5-dimensional self-critique, and the "5 schools × 20 design philosophies" idea behind our direction picker — all distilled into [`apps/daemon/src/prompts/discovery.ts`](apps/daemon/src/prompts/discovery.ts).
-- [**`op7418/guizang-ppt-skill`**](https://github.com/op7418/guizang-ppt-skill) — the deck mode. Bundled verbatim under [`skills/guizang-ppt/`](skills/guizang-ppt/) with original LICENSE preserved; magazine-style layouts, WebGL hero, P0/P1/P2 checklists.
+- [**`op7418/guizang-ppt-skill`**](https://github.com/op7418/guizang-ppt-skill) — the deck mode. Bundled verbatim under [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) with original LICENSE preserved; magazine-style layouts, WebGL hero, P0/P1/P2 checklists.
 - [**`OpenCoworkAI/open-codesign`**](https://github.com/OpenCoworkAI/open-codesign) — the UX north star and our closest peer. The first open-source Claude-Design alternative. We borrow its streaming-artifact loop, its sandboxed-iframe preview pattern (vendored React 18 + Babel), its live agent panel (todos + tool calls + interruptible generation), and its five-format export list (HTML / PDF / PPTX / ZIP / Markdown). We deliberately diverge on form factor — they are a desktop Electron app bundling [`pi-ai`][piai]; we are a web app + local daemon that delegates to your existing CLI.
 - [**`multica-ai/multica`**](https://github.com/multica-ai/multica) — the daemon-and-runtime architecture. PATH-scan agent detection, the local daemon as the only privileged process, the agent-as-teammate worldview.
 
@@ -64,8 +66,10 @@ OD stands on four open-source shoulders:
 |---|---|
 | **Coding-agent CLIs (16)** | Claude Code · Codex CLI · Devin for Terminal · Cursor Agent · Gemini CLI · OpenCode · Qwen Code · Qoder CLI · GitHub Copilot CLI · Hermes (ACP) · Kimi CLI (ACP) · Pi (RPC) · Kiro CLI (ACP) · Kilo (ACP) · Mistral Vibe CLI (ACP) · DeepSeek TUI — auto-detected on `PATH`, swap with one click |
 | **BYOK fallback** | Protocol-specific API proxy at `/api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` — paste `baseUrl` + `apiKey` + `model`, choose Anthropic / OpenAI / Azure OpenAI / Google Gemini / Ollama Cloud / SenseAudio, and the daemon normalizes SSE back to the same chat stream. SenseAudio chat additionally exposes `generate_image` and `generate_video` tools so the model can write rendered artifacts straight into the active project's folder. Internal-IP/SSRF blocked at the daemon edge. |
-| **Design systems built-in** | **129** — 2 hand-authored starters + 70 product systems (Linear, Stripe, Vercel, Airbnb, Tesla, Notion, Anthropic, Apple, Cursor, Supabase, Figma, Xiaohongshu, …) from [`awesome-design-md`][acd2], plus 57 design skills from [`awesome-design-skills`][ads] added directly under `design-systems/` |
-| **Skills built-in** | **132** — 27 in `prototype` mode (web-prototype, saas-landing, dashboard, mobile-app, gamified-app, social-carousel, magazine-poster, dating-web, sprite-animation, motion-frames, critique, tweaks, wireframe-sketch, pm-spec, eng-runbook, finance-report, hr-onboarding, invoice, kanban-board, team-okrs, …) + 4 in `deck` mode (`guizang-ppt` · `simple-deck` · `replit-deck` · `weekly-update`). Grouped in the picker by `scenario`: design / marketing / operation / engineering / product / finance / hr / sale / personal. |
+| **Design systems built-in** | **150** packages with `design-systems/<slug>/DESIGN.md`; an optional `manifest.json` is present in `default/`. Brand-inspired systems and style presets share this catalog. |
+| **Skill catalog** | **137** entries with `skills/<slug>/SKILL.md`, including upstream catalog stubs. This is a directory-based count, not a count of fully vendored upstream workflows. |
+| **Design templates built-in** | **110** packages with `design-templates/<slug>/SKILL.md`, counted separately from the skill catalog. Derived example cards are not additional packages. |
+| **Plugins bundled** | **401** unique manifest names under `plugins/_official/`: 13 atoms + 142 design-system wrappers + 140 examples + 45 image templates + 11 scenarios + 50 video templates. Community/spec examples are excluded; wrappers are not additional design systems or skills. |
 | **Media generation** | Image · video · audio surfaces ship alongside the design loop. **gpt-image-2** (Azure / OpenAI) for posters, avatars, infographics, illustrated maps · **Seedance 2.0** (ByteDance) for cinematic 15s text-to-video and image-to-video · **HyperFrames** ([heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)) for HTML→MP4 motion graphics (product reveals, kinetic typography, data charts, social overlays, logo outros). Other image generators can already plug in through **Custom Image API** / **ImageRouter** when they expose an OpenAI-compatible image endpoint; workflow-first local runtimes such as **ComfyUI** are tracked separately as planned adapters. **93** ready-to-replicate prompts gallery — 43 gpt-image-2 + 39 Seedance + 11 HyperFrames — under [`prompt-templates/`](prompt-templates/), with preview thumbnails and source attribution. Same chat surface as code; outputs a real `.mp4` / `.png` chip into the project workspace. |
 | **Visual directions** | 5 curated schools (Editorial Monocle · Modern Minimal · Warm Soft · Tech Utility · Brutalist Experimental) — each ships a deterministic OKLch palette + font stack ([`apps/daemon/src/prompts/directions.ts`](apps/daemon/src/prompts/directions.ts)) |
 | **Device frames** | iPhone 15 Pro · Pixel · iPad Pro · MacBook · Browser Chrome — pixel-accurate, shared across skills under [`assets/frames/`](assets/frames/) |
@@ -111,8 +115,8 @@ Linux AppImage packaging is available through the optional release lane and is c
 <sub><b>Sandboxed preview</b> — every <code>&lt;artifact&gt;</code> renders in a clean srcdoc iframe. Editable in place via the file workspace; downloadable as HTML, PDF, ZIP.</sub>
 </td>
 <td width="50%">
-<img src="docs/screenshots/06-design-systems-library.png" alt="06 · 150-system library" /><br/>
-<sub><b>150-system library</b> — every product system shows its 4-color signature. Click for the full <code>DESIGN.md</code>, swatch grid, and live showcase.</sub>
+<img src="docs/screenshots/06-design-systems-library.png" alt="06 · Design-system library" /><br/>
+<sub><b>Design-system library</b> — every product system shows its 4-color signature. Click for the full <code>DESIGN.md</code>, swatch grid, and live showcase.</sub>
 </td>
 </tr>
 <tr>
@@ -129,9 +133,9 @@ Linux AppImage packaging is available through the optional release lane and is c
 
 ## Skills
 
-**132 skills ship in the box.** Each is a folder under [`skills/`](skills/) following the Claude Code [`SKILL.md`][skill] convention with an extended `od:` frontmatter that the daemon parses verbatim — `mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `featured`, `fidelity`, `speaker_notes`, `animations`, `example_prompt` ([`apps/daemon/src/skills.ts`](apps/daemon/src/skills.ts)).
+**137 skill entries ship under [`skills/`](skills/), including catalog stubs; 110 design-template packages live separately under [`design-templates/`](design-templates/).** Both use the Claude Code [`SKILL.md`][skill] convention with extended `od:` frontmatter parsed by the daemon ([`apps/daemon/src/skills.ts`](apps/daemon/src/skills.ts)). The skill count includes entries that advertise an upstream workflow rather than bundling all its assets, scripts, and references; see [`skills/AGENTS.md`](skills/AGENTS.md).
 
-Two **modes** anchor the interactive catalog: **`prototype`** (32 skills — anything that renders as a single-page artifact, from a magazine landing to a phone screen to a PM spec doc) and **`deck`** (9 skills — horizontal-swipe presentations with deck-framework chrome). The catalog also ships `image`, `video`, `audio`, `template`, `design-system`, and `utility` modes for media generation, catalog updaters, and post-export audit helpers. The **`scenario`** field is what the picker groups them by: `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
+The rendering catalog uses **`prototype`** and **`deck`** modes alongside image, video, audio, and other templates. Settings → Skills reads `skills/`; the EntryView Templates tab reads `design-templates/`. Older rendering entries also remain in `skills/`, so inventory counts follow directory ownership rather than adding up `od.mode` values. The examples below are a selection, not a complete inventory. The **`scenario`** field groups entries by `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
 
 ### Showcase examples
 
@@ -140,42 +144,42 @@ The visually distinctive skills you'll most likely run first. Each ships a real 
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/dating-web/"><img src="docs/screenshots/skills/dating-web.png" alt="dating-web" /></a><br/>
-<sub><b><a href="skills/dating-web/"><code>dating-web</code></a></b> · <i>prototype</i><br/>Consumer dating / matchmaking dashboard — left rail nav, ticker bar, KPIs, 30-day mutual-matches chart, editorial typography.</sub>
+<a href="design-templates/dating-web/"><img src="docs/screenshots/skills/dating-web.png" alt="dating-web" /></a><br/>
+<sub><b><a href="design-templates/dating-web/"><code>dating-web</code></a></b> · <i>prototype</i><br/>Consumer dating / matchmaking dashboard — left rail nav, ticker bar, KPIs, 30-day mutual-matches chart, editorial typography.</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/digital-eguide/"><img src="docs/screenshots/skills/digital-eguide.png" alt="digital-eguide" /></a><br/>
-<sub><b><a href="skills/digital-eguide/"><code>digital-eguide</code></a></b> · <i>template</i><br/>Two-spread digital e-guide — cover (title, author, TOC teaser) + lesson spread with pull-quote and step list. Creator / lifestyle tone.</sub>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="skills/email-marketing/"><img src="docs/screenshots/skills/email-marketing.png" alt="email-marketing" /></a><br/>
-<sub><b><a href="skills/email-marketing/"><code>email-marketing</code></a></b> · <i>prototype</i><br/>Brand product-launch HTML email — masthead, hero image, headline lockup, CTA, specs grid. Centered single-column, table-fallback safe.</sub>
-</td>
-<td width="50%" valign="top">
-<a href="skills/gamified-app/"><img src="docs/screenshots/skills/gamified-app.png" alt="gamified-app" /></a><br/>
-<sub><b><a href="skills/gamified-app/"><code>gamified-app</code></a></b> · <i>prototype</i><br/>Three-frame gamified mobile-app prototype on a dark showcase stage — cover, today's quests with XP ribbons + level bar, quest detail.</sub>
+<a href="design-templates/digital-eguide/"><img src="docs/screenshots/skills/digital-eguide.png" alt="digital-eguide" /></a><br/>
+<sub><b><a href="design-templates/digital-eguide/"><code>digital-eguide</code></a></b> · <i>template</i><br/>Two-spread digital e-guide — cover (title, author, TOC teaser) + lesson spread with pull-quote and step list. Creator / lifestyle tone.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/mobile-onboarding/"><img src="docs/screenshots/skills/mobile-onboarding.png" alt="mobile-onboarding" /></a><br/>
-<sub><b><a href="skills/mobile-onboarding/"><code>mobile-onboarding</code></a></b> · <i>prototype</i><br/>Three-frame mobile onboarding flow — splash, value-prop, sign-in. Status bar, swipe dots, primary CTA.</sub>
+<a href="design-templates/email-marketing/"><img src="docs/screenshots/skills/email-marketing.png" alt="email-marketing" /></a><br/>
+<sub><b><a href="design-templates/email-marketing/"><code>email-marketing</code></a></b> · <i>prototype</i><br/>Brand product-launch HTML email — masthead, hero image, headline lockup, CTA, specs grid. Centered single-column, table-fallback safe.</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/motion-frames/"><img src="docs/screenshots/skills/motion-frames.png" alt="motion-frames" /></a><br/>
-<sub><b><a href="skills/motion-frames/"><code>motion-frames</code></a></b> · <i>prototype</i><br/>Single-frame motion-design hero with looping CSS animations — rotating type ring, animated globe, ticking timer. Hand-off ready for HyperFrames.</sub>
+<a href="design-templates/gamified-app/"><img src="docs/screenshots/skills/gamified-app.png" alt="gamified-app" /></a><br/>
+<sub><b><a href="design-templates/gamified-app/"><code>gamified-app</code></a></b> · <i>prototype</i><br/>Three-frame gamified mobile-app prototype on a dark showcase stage — cover, today's quests with XP ribbons + level bar, quest detail.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="skills/social-carousel/"><img src="docs/screenshots/skills/social-carousel.png" alt="social-carousel" /></a><br/>
-<sub><b><a href="skills/social-carousel/"><code>social-carousel</code></a></b> · <i>prototype</i><br/>Three-card 1080×1080 social-media carousel — cinematic panels with display headlines that connect across the series, brand mark, loop affordance.</sub>
+<a href="design-templates/mobile-onboarding/"><img src="docs/screenshots/skills/mobile-onboarding.png" alt="mobile-onboarding" /></a><br/>
+<sub><b><a href="design-templates/mobile-onboarding/"><code>mobile-onboarding</code></a></b> · <i>prototype</i><br/>Three-frame mobile onboarding flow — splash, value-prop, sign-in. Status bar, swipe dots, primary CTA.</sub>
 </td>
 <td width="50%" valign="top">
-<a href="skills/sprite-animation/"><img src="docs/screenshots/skills/sprite-animation.png" alt="sprite-animation" /></a><br/>
-<sub><b><a href="skills/sprite-animation/"><code>sprite-animation</code></a></b> · <i>prototype</i><br/>Pixel / 8-bit animated explainer slide — full-bleed cream stage, animated pixel mascot, kinetic Japanese display type, looping CSS keyframes.</sub>
+<a href="design-templates/motion-frames/"><img src="docs/screenshots/skills/motion-frames.png" alt="motion-frames" /></a><br/>
+<sub><b><a href="design-templates/motion-frames/"><code>motion-frames</code></a></b> · <i>prototype</i><br/>Single-frame motion-design hero with looping CSS animations — rotating type ring, animated globe, ticking timer. Hand-off ready for HyperFrames.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="design-templates/social-carousel/"><img src="docs/screenshots/skills/social-carousel.png" alt="social-carousel" /></a><br/>
+<sub><b><a href="design-templates/social-carousel/"><code>social-carousel</code></a></b> · <i>prototype</i><br/>Three-card 1080×1080 social-media carousel — cinematic panels with display headlines that connect across the series, brand mark, loop affordance.</sub>
+</td>
+<td width="50%" valign="top">
+<a href="design-templates/sprite-animation/"><img src="docs/screenshots/skills/sprite-animation.png" alt="sprite-animation" /></a><br/>
+<sub><b><a href="design-templates/sprite-animation/"><code>sprite-animation</code></a></b> · <i>prototype</i><br/>Pixel / 8-bit animated explainer slide — full-bleed cream stage, animated pixel mascot, kinetic Japanese display type, looping CSS keyframes.</sub>
 </td>
 </tr>
 </table>
@@ -184,49 +188,49 @@ The visually distinctive skills you'll most likely run first. Each ships a real 
 
 | Skill | Platform | Scenario | What it produces |
 |---|---|---|---|
-| [`web-prototype`](skills/web-prototype/) | desktop | design | Single-page HTML — landings, marketing, hero pages (default for prototype) |
-| [`saas-landing`](skills/saas-landing/) | desktop | marketing | Hero / features / pricing / CTA marketing layout |
-| [`dashboard`](skills/dashboard/) | desktop | operation | Admin / analytics with sidebar + dense data layout |
-| [`pricing-page`](skills/pricing-page/) | desktop | sale | Standalone pricing + comparison tables |
-| [`docs-page`](skills/docs-page/) | desktop | engineering | 3-column documentation layout |
-| [`blog-post`](skills/blog-post/) | desktop | marketing | Editorial long-form |
-| [`mobile-app`](skills/mobile-app/) | mobile | design | iPhone 15 Pro / Pixel framed app screen(s) |
-| [`mobile-onboarding`](skills/mobile-onboarding/) | mobile | design | Multi-screen mobile onboarding flow (splash · value-prop · sign-in) |
-| [`gamified-app`](skills/gamified-app/) | mobile | personal | Three-frame gamified mobile-app prototype |
-| [`email-marketing`](skills/email-marketing/) | desktop | marketing | Brand product-launch HTML email (table-fallback safe) |
-| [`social-carousel`](skills/social-carousel/) | desktop | marketing | 3-card 1080×1080 social carousel |
-| [`magazine-poster`](skills/magazine-poster/) | desktop | marketing | Single-page magazine-style poster |
-| [`motion-frames`](skills/motion-frames/) | desktop | marketing | Motion-design hero with looping CSS animations |
-| [`sprite-animation`](skills/sprite-animation/) | desktop | marketing | Pixel / 8-bit animated explainer slide |
-| [`dating-web`](skills/dating-web/) | desktop | personal | Consumer dating dashboard mockup |
-| [`digital-eguide`](skills/digital-eguide/) | desktop | marketing | Two-spread digital e-guide (cover + lesson) |
-| [`wireframe-sketch`](skills/wireframe-sketch/) | desktop | design | Hand-drawn ideation sketch — for the "show something visible early" pass |
-| [`critique`](skills/critique/) | desktop | design | Five-dimensional self-critique scoresheet (Philosophy · Hierarchy · Detail · Function · Innovation) |
-| [`tweaks`](skills/tweaks/) | desktop | design | AI-emitted tweaks panel — the model surfaces the parameters worth nudging |
+| [`web-prototype`](design-templates/web-prototype/) | desktop | design | Single-page HTML — landings, marketing, hero pages (default for prototype) |
+| [`saas-landing`](design-templates/saas-landing/) | desktop | marketing | Hero / features / pricing / CTA marketing layout |
+| [`dashboard`](design-templates/dashboard/) | desktop | operation | Admin / analytics with sidebar + dense data layout |
+| [`pricing-page`](design-templates/pricing-page/) | desktop | sale | Standalone pricing + comparison tables |
+| [`docs-page`](design-templates/docs-page/) | desktop | engineering | 3-column documentation layout |
+| [`blog-post`](design-templates/blog-post/) | desktop | marketing | Editorial long-form |
+| [`mobile-app`](design-templates/mobile-app/) | mobile | design | iPhone 15 Pro / Pixel framed app screen(s) |
+| [`mobile-onboarding`](design-templates/mobile-onboarding/) | mobile | design | Multi-screen mobile onboarding flow (splash · value-prop · sign-in) |
+| [`gamified-app`](design-templates/gamified-app/) | mobile | personal | Three-frame gamified mobile-app prototype |
+| [`email-marketing`](design-templates/email-marketing/) | desktop | marketing | Brand product-launch HTML email (table-fallback safe) |
+| [`social-carousel`](design-templates/social-carousel/) | desktop | marketing | 3-card 1080×1080 social carousel |
+| [`magazine-poster`](design-templates/magazine-poster/) | desktop | marketing | Single-page magazine-style poster |
+| [`motion-frames`](design-templates/motion-frames/) | desktop | marketing | Motion-design hero with looping CSS animations |
+| [`sprite-animation`](design-templates/sprite-animation/) | desktop | marketing | Pixel / 8-bit animated explainer slide |
+| [`dating-web`](design-templates/dating-web/) | desktop | personal | Consumer dating dashboard mockup |
+| [`digital-eguide`](design-templates/digital-eguide/) | desktop | marketing | Two-spread digital e-guide (cover + lesson) |
+| [`wireframe-sketch`](design-templates/wireframe-sketch/) | desktop | design | Hand-drawn ideation sketch — for the "show something visible early" pass |
+| [`critique`](design-templates/critique/) | desktop | design | Five-dimensional self-critique scoresheet (Philosophy · Hierarchy · Detail · Function · Innovation) |
+| [`tweaks`](design-templates/tweaks/) | desktop | design | AI-emitted tweaks panel — the model surfaces the parameters worth nudging |
 
 ### Deck surfaces (deck mode)
 
 | Skill | Default for | What it produces |
 |---|---|---|
-| [`guizang-ppt`](skills/guizang-ppt/) | **default** for deck | Magazine-style web PPT — bundled verbatim from [op7418/guizang-ppt-skill][guizang], original LICENSE preserved |
-| [`simple-deck`](skills/simple-deck/) | — | Minimal horizontal-swipe deck |
-| [`replit-deck`](skills/replit-deck/) | — | Product-walkthrough deck (Replit-style) |
-| [`weekly-update`](skills/weekly-update/) | — | Team weekly cadence as a swipe deck (progress · blockers · next) |
+| [`guizang-ppt`](design-templates/guizang-ppt/) | **default** for deck | Magazine-style web PPT — bundled verbatim from [op7418/guizang-ppt-skill][guizang], original LICENSE preserved |
+| [`simple-deck`](design-templates/simple-deck/) | — | Minimal horizontal-swipe deck |
+| [`replit-deck`](design-templates/replit-deck/) | — | Product-walkthrough deck (Replit-style) |
+| [`weekly-update`](design-templates/weekly-update/) | — | Team weekly cadence as a swipe deck (progress · blockers · next) |
 
 ### Office & operations surfaces (prototype mode, document-flavored scenarios)
 
 | Skill | Scenario | What it produces |
 |---|---|---|
-| [`pm-spec`](skills/pm-spec/) | product | PM specification doc with TOC + decision log |
-| [`team-okrs`](skills/team-okrs/) | product | OKR scoresheet |
-| [`meeting-notes`](skills/meeting-notes/) | operation | Meeting decision log |
-| [`kanban-board`](skills/kanban-board/) | operation | Board snapshot |
-| [`eng-runbook`](skills/eng-runbook/) | engineering | Incident runbook |
-| [`finance-report`](skills/finance-report/) | finance | Exec finance summary |
-| [`invoice`](skills/invoice/) | finance | Single-page invoice |
-| [`hr-onboarding`](skills/hr-onboarding/) | hr | Role onboarding plan |
+| [`pm-spec`](design-templates/pm-spec/) | product | PM specification doc with TOC + decision log |
+| [`team-okrs`](design-templates/team-okrs/) | product | OKR scoresheet |
+| [`meeting-notes`](design-templates/meeting-notes/) | operation | Meeting decision log |
+| [`kanban-board`](design-templates/kanban-board/) | operation | Board snapshot |
+| [`eng-runbook`](design-templates/eng-runbook/) | engineering | Incident runbook |
+| [`finance-report`](design-templates/finance-report/) | finance | Exec finance summary |
+| [`invoice`](design-templates/invoice/) | finance | Single-page invoice |
+| [`hr-onboarding`](design-templates/hr-onboarding/) | hr | Role onboarding plan |
 
-Adding a skill takes one folder. Read [`docs/skills-protocol.md`](docs/skills-protocol.md) for the extended frontmatter, fork an existing skill, restart the daemon, it appears in the picker. The catalog endpoint is `GET /api/skills`; per-skill seed assembly (template + side-file references) lives at `GET /api/skills/:id/example`.
+Add functional skills under `skills/` and rendering templates under `design-templates/`; both use the extended frontmatter described in [`docs/skills-protocol.md`](docs/skills-protocol.md). Their catalog endpoints are `GET /api/skills` and `GET /api/design-templates`, respectively. Asset/example routes under `/api/skills/:id/` span both roots for compatibility.
 
 ## Six load-bearing ideas
 
@@ -234,13 +238,13 @@ Adding a skill takes one folder. Read [`docs/skills-protocol.md`](docs/skills-pr
 
 The daemon scans your `PATH` for [`claude`](https://docs.anthropic.com/en/docs/claude-code), [`codex`](https://github.com/openai/codex), `devin`, [`cursor-agent`](https://www.cursor.com/cli), [`gemini`](https://github.com/google-gemini/gemini-cli), [`opencode`](https://opencode.ai/), [`qwen`](https://github.com/QwenLM/qwen-code), `qodercli`, [`copilot`](https://github.com/features/copilot/cli), `hermes`, `kimi`, [`pi`](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent), [`kiro-cli`](https://kiro.dev), `kilo`, [`vibe-acp`](https://github.com/mistralai/mistral-vibe), and `deepseek` on startup. Whichever ones it finds become candidate design engines — driven over stdio with one adapter per CLI, swappable from the model picker. Inspired by [`multica`](https://github.com/multica-ai/multica) and [`cc-switch`](https://github.com/farion1231/cc-switch). No CLI installed? The API mode is the same pipeline minus the spawn — choose Anthropic, OpenAI-compatible, Azure OpenAI, or Google Gemini and the daemon forwards normalized SSE chunks back. Loopback is allowed for local LLM providers such as Ollama and LM Studio; non-loopback private, link-local, CGNAT, multicast, reserved, and redirect targets are rejected at the daemon edge.
 
-### 2 · Skills are files, not plugins.
+### 2 · Skills and design templates are portable files.
 
-Following Claude Code's [`SKILL.md` convention](https://docs.anthropic.com/en/docs/claude-code/skills), each skill is `SKILL.md` + `assets/` + `references/`. Drop a folder into [`skills/`](skills/), restart the daemon, it appears in the picker. The bundled `magazine-web-ppt` is [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) committed verbatim — original license preserved, attribution preserved.
+Following Claude Code's [`SKILL.md` convention](https://docs.anthropic.com/en/docs/claude-code/skills), each entry has a `SKILL.md` and may include `assets/` and `references/`. Functional skills belong under [`skills/`](skills/); rendering templates belong under [`design-templates/`](design-templates/). Plugins describe runnable workflows through `open-design.json` and can reference these catalogs. The bundled `magazine-web-ppt` template comes from [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill), with its original license and attribution preserved.
 
 ### 3 · Design Systems are portable Markdown, not theme JSON.
 
-The 9-section `DESIGN.md` schema from [`VoltAgent/awesome-design-md`][acd2] — color, typography, spacing, layout, components, motion, voice, brand, anti-patterns. Every artifact reads from the active system. Switch system → next render uses the new tokens. The dropdown ships with **Linear, Stripe, Vercel, Airbnb, Tesla, Notion, Apple, Anthropic, Cursor, Supabase, Figma, Resend, Raycast, Lovable, Cohere, Mistral, ElevenLabs, X.AI, Spotify, Webflow, Sanity, PostHog, Sentry, MongoDB, ClickHouse, Cal, Replicate, Clay, Composio, Xiaohongshu…** — plus 57 design skills sourced from [`awesome-design-skills`][ads].
+The 9-section `DESIGN.md` schema from [`VoltAgent/awesome-design-md`][acd2] — color, typography, spacing, layout, components, motion, voice, brand, anti-patterns. Every artifact reads from the active system. Switch system → next render uses the new tokens. The dropdown ships with **Linear, Stripe, Vercel, Airbnb, Tesla, Notion, Apple, Anthropic, Cursor, Supabase, Figma, Resend, Raycast, Lovable, Cohere, Mistral, ElevenLabs, X.AI, Spotify, Webflow, Sanity, PostHog, Sentry, MongoDB, ClickHouse, Cal, Replicate, Clay, Composio, Xiaohongshu…** — plus design-style specs sourced from [`awesome-design-skills`][ads].
 
 ### 4 · The interactive question form prevents 80% of redirects.
 
@@ -260,7 +264,7 @@ What you compose at send time isn't "system + user". It's:
 DISCOVERY directives  (turn-1 form, turn-2 brand branch, TodoWrite, 5-dim critique)
   + identity charter   (OFFICIAL_DESIGNER_PROMPT, anti-AI-slop, junior-pass)
   + active DESIGN.md   (150 systems available)
-  + active SKILL.md    (132 skills available)
+  + active SKILL.md    (137 skill entries + 110 design-template packages)
   + project metadata   (kind, fidelity, speakerNotes, animations, inspiration ids)
   + skill side files   (auto-injected pre-flight: read assets/template.html + references/*.md)
   + (deck kind, no skill seed) DECK_FRAMEWORK_DIRECTIVE   (nav / counter / scroll / print)
@@ -341,7 +345,7 @@ docker compose version
 1. Clone the repository, change to the deploy directory, and copy the environment template:
 
    ```bash
-   git clone https://github.com/nexu-io/open-design.git
+   git clone https://github.com/zivechu/open-design.git
    cd open-design/deploy
    cp .env.example .env
    ```
@@ -390,7 +394,7 @@ For advanced Docker configuration and environment variables, see [`QUICKSTART.md
 ### Run from source
 
 ```bash
-git clone https://github.com/nexu-io/open-design.git
+git clone https://github.com/zivechu/open-design.git
 cd open-design
 corepack enable
 corepack pnpm --version   # should print 10.33.2
@@ -408,7 +412,7 @@ For desktop/background startup, fixed-port restarts, and media generation dispat
 The first load:
 
 1. Detects which agent CLIs you have on `PATH` and picks one automatically.
-2. Loads 132 skills + 150 design systems.
+2. Loads 137 skill entries + 110 design-template packages + 150 design systems; registers 401 bundled plugins.
 3. Pops the welcome dialog so you can paste an Anthropic key (only needed for the BYOK fallback path).
 4. **Auto-creates `./.od/`** — the local runtime folder for the SQLite project DB, per-project artifacts, and saved renders. There is no `od init` step; the daemon `mkdir`s everything it needs on boot.
 
@@ -709,20 +713,17 @@ open-design/
 │   ├── sidecar/                   ← generic sidecar runtime primitives
 │   └── platform/                  ← generic process/platform primitives
 │
-├── skills/                        ← 132 SKILL.md skill bundles (32 prototype + 9 deck + image / video / audio / template / design-system / utility)
-│   ├── web-prototype/             ← default for prototype mode
-│   ├── saas-landing/  dashboard/  pricing-page/  docs-page/  blog-post/
-│   ├── mobile-app/  mobile-onboarding/  gamified-app/
-│   ├── email-marketing/  social-carousel/  magazine-poster/
-│   ├── motion-frames/  sprite-animation/  digital-eguide/  dating-web/
-│   ├── critique/  tweaks/  wireframe-sketch/
-│   ├── pm-spec/  team-okrs/  meeting-notes/  kanban-board/
-│   ├── eng-runbook/  finance-report/  invoice/  hr-onboarding/
-│   ├── simple-deck/  replit-deck/  weekly-update/   ← deck mode
-│   └── guizang-ppt/               ← bundled magazine-web-ppt (default for deck)
-│       ├── SKILL.md
-│       ├── assets/template.html   ← seed
-│       └── references/{themes,layouts,components,checklist}.md
+├── skills/                        ← 137 SKILL.md entries, including upstream catalog stubs
+│   ├── agent-browser/  design-brief/  hatch-pet/  …
+│   └── AGENTS.md                  ← functional-skill and catalog-stub scope
+│
+├── design-templates/              ← 110 SKILL.md rendering packages
+│   ├── web-prototype/  dashboard/  mobile-app/  …
+│   ├── html-ppt/  simple-deck/  guizang-ppt/  …
+│   └── AGENTS.md                  ← rendering-template scope
+│
+├── plugins/_official/             ← 401 open-design.json manifests
+│   └── atoms/  design-systems/  examples/  image-templates/  scenarios/  video-templates/
 │
 ├── design-systems/                ← 150 DESIGN.md systems
 │   ├── default/                   ← Neutral Modern (starter)
@@ -766,13 +767,13 @@ open-design/
 ## Design Systems
 
 <p align="center">
-  <img src="docs/assets/design-systems-library.png" alt="The 150 design systems library — style guide spread" width="100%" />
+  <img src="docs/assets/design-systems-library.png" alt="The design systems library — style guide spread" width="100%" />
 </p>
 
-150 systems out of the box, each as a single [`DESIGN.md`](design-systems/README.md):
+150 design-system packages out of the box, each with a [`DESIGN.md`](design-systems/README.md):
 
 <details>
-<summary><b>Full catalog</b> (click to expand)</summary>
+<summary><b>Selected catalog examples</b> (click to expand)</summary>
 
 **AI & LLM** — `claude` · `cohere` · `mistral-ai` · `minimax` · `together-ai` · `replicate` · `runwayml` · `elevenlabs` · `ollama` · `x-ai`
 
@@ -794,7 +795,7 @@ open-design/
 
 </details>
 
-The product-system library is imported via [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts) from [`VoltAgent/awesome-design-md`][acd2]. Re-run to refresh. The 57 design skills are sourced from [`bergside/awesome-design-skills`][ads] and added directly in `design-systems/`.
+The product-system library is imported via [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts) from [`VoltAgent/awesome-design-md`][acd2]. Re-run to refresh. Design-style specs are sourced from [`bergside/awesome-design-skills`][ads] and added directly in `design-systems/`.
 
 ## Visual directions
 
@@ -860,7 +861,7 @@ Click any thumbnail to play the actual rendered MP4. Full set → [`prompt-templ
 
 ### HyperFrames — HTML→MP4 motion graphics (11 ready-to-replicate templates)
 
-[**`heygen-com/hyperframes`**](https://github.com/heygen-com/hyperframes) is HeyGen's open-source agent-native video framework — you (or the agent) write HTML + CSS + GSAP, HyperFrames renders it to a deterministic MP4 via headless Chrome + FFmpeg. Open Design ships HyperFrames as a first-class video model (`hyperframes-html`) wired into the daemon dispatch, plus the `skills/hyperframes/` skill that teaches the agent the timeline contract, scene-transition rules, audio-reactive patterns, captions/TTS, and the catalog blocks (`npx hyperframes add <slug>`).
+[**`heygen-com/hyperframes`**](https://github.com/heygen-com/hyperframes) is HeyGen's open-source agent-native video framework — you (or the agent) write HTML + CSS + GSAP, HyperFrames renders it to a deterministic MP4 via headless Chrome + FFmpeg. Open Design ships HyperFrames as a first-class video model (`hyperframes-html`) wired into the daemon dispatch, plus the `design-templates/hyperframes/` skill that teaches the agent the timeline contract, scene-transition rules, audio-reactive patterns, captions/TTS, and the catalog blocks (`npx hyperframes add <slug>`).
 
 Eleven hyperframes prompts ship under [`prompt-templates/video/hyperframes-*.json`](prompt-templates/video/), each one a concrete brief that produces a specific archetype:
 
@@ -885,7 +886,7 @@ Eleven hyperframes prompts ship under [`prompt-templates/video/hyperframes-*.jso
 </tr>
 </table>
 
-Pattern is the same as the rest: pick a template, edit the brief, send. The agent reads the bundled `skills/hyperframes/SKILL.md` (which carries the OD-specific render workflow — composition source files into a `.hyperframes-cache/` so they don't clutter the file workspace, daemon dispatches `npx hyperframes render` to dodge the macOS sandbox-exec / Puppeteer hang, only the final `.mp4` lands as a project chip), authors the composition, and ships an MP4. Catalog block thumbnails © HeyGen, served from their CDN; the OSS framework itself is Apache-2.0.
+Pattern is the same as the rest: pick a template, edit the brief, send. The agent reads the bundled `design-templates/hyperframes/SKILL.md` (which carries the OD-specific render workflow — composition source files into a `.hyperframes-cache/` so they don't clutter the file workspace, daemon dispatches `npx hyperframes render` to dodge the macOS sandbox-exec / Puppeteer hang, only the final `.mp4` lands as a project chip), authors the composition, and ships an MP4. Catalog block thumbnails © HeyGen, served from their CDN; the OSS framework itself is Apache-2.0.
 
 > **Also wired but not surfaced as templates yet:** Kling 2.0 / 1.6 / 1.5, Veo 3 / Veo 2, Sora 2 / Sora 2-Pro (via Fal), MiniMax video-01 — all live in `VIDEO_MODELS` ([`apps/web/src/media/models.ts`](apps/web/src/media/models.ts)). Suno v5 / v4.5, Udio v2, Lyria 2 (music) and gpt-4o-mini-tts, MiniMax TTS (speech) cover the audio surface. Templates for these are open contributions — drop a JSON into `prompt-templates/video/` or `prompt-templates/audio/` and it shows up in the picker.
 
@@ -895,7 +896,7 @@ The chat / artifact loop gets the spotlight, but a handful of less-visible capab
 
 - **Claude Design ZIP import.** Drop an export from claude.ai onto the welcome dialog. `POST /api/import/claude-design` extracts it into a real `.od/projects/<id>/`, opens the entry file as a tab, and stages a continue-where-Anthropic-left-off prompt for your local agent. No re-prompting, no "ask the model to re-create what we just had". ([`apps/daemon/src/server.ts`](apps/daemon/src/server.ts) — `/api/import/claude-design`)
 - **Multi-provider BYOK proxy.** `POST /api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` takes `{ baseUrl, apiKey, model, messages }`, builds the provider-specific upstream request, normalizes SSE chunks into `delta/end/error`, and allows loopback local LLM providers while rejecting non-loopback private, link-local, CGNAT, multicast, reserved, and redirect targets to head off SSRF. OpenAI-compatible covers OpenAI, Azure AI Foundry `/openai/v1`, DeepSeek, Groq, MiMo, OpenRouter, Ollama, LM Studio, and self-hosted vLLM; Azure OpenAI adds deployment URL + `api-version`; Google uses Gemini `:streamGenerateContent`.
-- **User-saved templates.** Once you like a render, `POST /api/templates` snapshots the HTML + metadata into the SQLite `templates` table. The next project picks it from a "your templates" row in the picker — same surface as the shipped 132, but yours.
+- **User-saved templates.** Once you like a render, `POST /api/templates` snapshots the HTML + metadata into the SQLite `templates` table. The next project picks it from a "your templates" row in the picker — same surface as the 110 shipped design-template packages, but yours.
 - **Tab persistence.** Every project remembers its open files and active tab in the `tabs` table. Reopen the project tomorrow and the workspace looks exactly the way you left it.
 - **Artifact lint API.** `POST /api/artifacts/lint` runs structural checks on a generated artifact (broken `<artifact>` framing, missing required side files, stale palette tokens) and returns findings the agent can read back into its next turn. The five-dim self-critique uses this to ground its score in real evidence, not vibes.
 - **Sidecar protocol + desktop automation.** Daemon, web, and desktop processes carry typed five-field stamps (`app · mode · namespace · ipc · source`) and expose a JSON-RPC IPC channel at `/tmp/open-design/ipc/<namespace>/<app>.sock`. `tools-dev inspect desktop status \| eval \| screenshot` drives that channel, so headless E2E works against a real Electron shell without bespoke harnesses ([`packages/sidecar-proto/`](packages/sidecar-proto/), [`apps/desktop/src/main/`](apps/desktop/src/main/)).
@@ -921,8 +922,8 @@ The whole machinery below is the [`huashu-design`](https://github.com/alchaincyf
 | Form factor | Web (claude.ai) | Desktop (Electron) | **Web app + local daemon** |
 | Deployable on Vercel | ❌ | ❌ | **✅** |
 | Agent runtime | Bundled (Opus 4.7) | Bundled ([`pi-ai`][piai]) | **Delegated to user's existing CLI** |
-| Skills | Proprietary | 12 custom TS modules + `SKILL.md` | **132 file-based [`SKILL.md`][skill] bundles, droppable** |
-| Design system | Proprietary | `DESIGN.md` (v0.2 roadmap) | **`DESIGN.md` × 129 systems shipped** |
+| Skills | Proprietary | 12 custom TS modules + `SKILL.md` | **137 skill entries (including catalog stubs) + 110 separate design-template packages** |
+| Design system | Proprietary | `DESIGN.md` (v0.2 roadmap) | **`DESIGN.md` × 150 systems shipped** |
 | Provider flexibility | Anthropic only | 7+ via [`pi-ai`][piai] | **16 CLI adapters + OpenAI-compatible BYOK proxy** |
 | Init question form | ❌ | ❌ | **✅ Hard rule, turn 1** |
 | Direction picker | ❌ | ❌ | **✅ 5 deterministic directions** |
@@ -980,11 +981,11 @@ Every external project this repo borrows from. Each link goes to the source so y
 |---|---|
 | [`Claude Design`][cd] | The closed-source product this repo is the open-source alternative to. |
 | [**`alchaincyf/huashu-design`**](https://github.com/alchaincyf/huashu-design) | The design-philosophy core. Junior-Designer workflow, the 5-step brand-asset protocol, anti-AI-slop checklist, 5-dimensional self-critique, and the "5 schools × 20 design philosophies" library behind our direction picker — all distilled into [`apps/daemon/src/prompts/discovery.ts`](apps/daemon/src/prompts/discovery.ts) and [`apps/daemon/src/prompts/directions.ts`](apps/daemon/src/prompts/directions.ts). |
-| [**`op7418/guizang-ppt-skill`**][guizang] | Magazine-web-PPT skill bundled verbatim under [`skills/guizang-ppt/`](skills/guizang-ppt/) with original LICENSE preserved. Default for deck mode. P0/P1/P2 checklist culture borrowed for every other skill. |
+| [**`op7418/guizang-ppt-skill`**][guizang] | Magazine-web-PPT skill bundled verbatim under [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) with original LICENSE preserved. Default for deck mode. P0/P1/P2 checklist culture borrowed for every other skill. |
 | [**`multica-ai/multica`**](https://github.com/multica-ai/multica) | The daemon + adapter architecture. PATH-scan agent detection, local daemon as the only privileged process, agent-as-teammate worldview. We adopt the model; we do not vendor the code. |
 | [**`OpenCoworkAI/open-codesign`**][ocod] | The first open-source Claude-Design alternative and our closest peer. UX patterns adopted: streaming-artifact loop, sandboxed-iframe preview (vendored React 18 + Babel), live agent panel (todos + tool calls + interruptible), five-format export list (HTML/PDF/PPTX/ZIP/Markdown), local-first storage hub, `SKILL.md` taste-injection, and the first pass of comment-mode preview annotations. UX patterns still on our roadmap: full surgical-edit reliability and AI-emitted tweaks panel. **We deliberately do not vendor [`pi-ai`][piai]** — open-codesign bundles it as the agent runtime; we delegate to whichever CLI the user already has. |
-| [`VoltAgent/awesome-claude-design`][acd] / [`awesome-design-md`][acd2] | Source of the 9-section `DESIGN.md` schema and 70 product systems imported via [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). |
-| [`bergside/awesome-design-skills`][ads] | Source of 57 design skills added directly as normalized `DESIGN.md` files under `design-systems/`. |
+| [`VoltAgent/awesome-claude-design`][acd] / [`awesome-design-md`][acd2] | Source of the 9-section `DESIGN.md` schema and product specs imported via [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). |
+| [`bergside/awesome-design-skills`][ads] | Source of design-style specs added directly as normalized `DESIGN.md` files under `design-systems/`. |
 | [`farion1231/cc-switch`](https://github.com/farion1231/cc-switch) | Inspiration for symlink-based skill distribution across multiple agent CLIs. |
 | [Claude Code skills][skill] | The `SKILL.md` convention adopted verbatim — any Claude Code skill drops into `skills/` and is picked up by the daemon. |
 
@@ -994,7 +995,7 @@ Long-form provenance write-up — what we take from each, what we deliberately d
 
 - [x] Daemon + agent detection (16 CLI adapters) + skill registry + design-system catalog
 - [x] Web app + chat + question form + 5-direction picker + todo progress + sandboxed preview
-- [x] 132 skills + 150 design systems + 5 visual directions + 5 device frames
+- [x] 137 skill entries + 110 design-template packages + 150 design systems + 401 bundled plugins + 5 visual directions + 5 device frames
 - [x] SQLite-backed projects · conversations · messages · tabs · templates
 - [x] Multi-provider BYOK proxy (`/api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream`) with SSRF guard
 - [x] Claude Design ZIP import (`/api/import/claude-design`)
@@ -1067,10 +1068,10 @@ If the curve bends up, that's the signal we look for. ★ this repo to push it.
 
 ## Credits
 
-The HTML PPT Studio family of skills — the master [`skills/html-ppt/`](skills/html-ppt/) and the per-template wrappers under [`skills/html-ppt-*/`](skills/) (15 full-deck templates, 36 themes, 31 single-page layouts, 27 CSS animations + 20 canvas FX, the keyboard runtime, and the magnetic-card presenter mode) — are integrated from the open-source project [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) (MIT). The upstream LICENSE ships in-tree at [`skills/html-ppt/LICENSE`](skills/html-ppt/LICENSE) and authorship credit goes to [@lewislulu](https://github.com/lewislulu). Each per-template Examples card (`html-ppt-pitch-deck`, `html-ppt-tech-sharing`, `html-ppt-presenter-mode`, `html-ppt-xhs-post`, …) delegates authoring guidance to the master skill so the upstream's prompt → output behavior is preserved end-to-end when you click **Use this prompt**.
+The HTML PPT Studio family of skills — the master [`design-templates/html-ppt/`](design-templates/html-ppt/) and the per-template wrappers under [`design-templates/html-ppt-*/`](design-templates/) (15 full-deck templates, 36 themes, 31 single-page layouts, 27 CSS animations + 20 canvas FX, the keyboard runtime, and the magnetic-card presenter mode) — are integrated from the open-source project [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) (MIT). The upstream LICENSE ships in-tree at [`design-templates/html-ppt/LICENSE`](design-templates/html-ppt/LICENSE) and authorship credit goes to [@lewislulu](https://github.com/lewislulu). Each per-template Examples card (`html-ppt-pitch-deck`, `html-ppt-tech-sharing`, `html-ppt-presenter-mode`, `html-ppt-xhs-post`, …) delegates authoring guidance to the master skill so the upstream's prompt → output behavior is preserved end-to-end when you click **Use this prompt**.
 
-The magazine / horizontal-swipe deck flow under [`skills/guizang-ppt/`](skills/guizang-ppt/) is integrated from [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) (MIT). Authorship credit goes to [@op7418](https://github.com/op7418).
+The magazine / horizontal-swipe deck flow under [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) is integrated from [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) (MIT). Authorship credit goes to [@op7418](https://github.com/op7418).
 
 ## License
 
-Apache-2.0. The bundled `skills/guizang-ppt/` retains its original [LICENSE](skills/guizang-ppt/LICENSE) (MIT) and authorship attribution to [op7418](https://github.com/op7418). The bundled `skills/html-ppt/` retains its original [LICENSE](skills/html-ppt/LICENSE) (MIT) and authorship attribution to [lewislulu](https://github.com/lewislulu).
+Apache-2.0. The bundled `design-templates/guizang-ppt/` retains its original [LICENSE](design-templates/guizang-ppt/LICENSE) (MIT) and authorship attribution to [op7418](https://github.com/op7418). The bundled `design-templates/html-ppt/` retains its original [LICENSE](design-templates/html-ppt/LICENSE) (MIT) and authorship attribution to [lewislulu](https://github.com/lewislulu).
